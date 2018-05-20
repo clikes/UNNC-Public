@@ -4,7 +4,7 @@ AE2LAC
 ------
 ### content:
 * [Mind Map]
-* Text book
+* [Text book]
 * Slides
 * Course work
 
