@@ -64,6 +64,10 @@ ppCommand n (CmdLet {clDecls = ds, clBody = c, cmdSrcPos = sp}) =
     indent n . showString "CmdLet" . spc . ppSrcPos sp . nl
     . ppSeq (n+1) ppDeclaration ds
     . ppCommand (n+1) c
+ppCommand n (CmdRepeat {crBody = c, crUntil = ds, cmdSrcPos = sp}) =
+    indent n . showString "CmdRepeat" . spc . ppSrcPos sp . nl
+    . ppCommand (n+1) c
+    . ppExpression (n+1) ds
 
 
 ------------------------------------------------------------------------------
@@ -79,6 +83,11 @@ ppExpression n (ExpApp {eaFun = f, eaArgs = es, expSrcPos = sp}) =
     indent n . showString "ExpApp" . spc . ppSrcPos sp . nl
     . ppExpression (n+1) f
     . ppSeq (n+1) ppExpression es
+-- ppExpression n (ExpCond {ecCond = c, ecExp1 = e1, ecExp2 = e2, expSrcPos = sp}) = 
+--     indent n . showString "ExpCond" . spc . ppSrcPos sp . nl
+--     . ppExpression (n+1) c
+--     . ppExpression (n+1) e1
+--     . ppExpression (n+1) e2
 
 
 ------------------------------------------------------------------------------

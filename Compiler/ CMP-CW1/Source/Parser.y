@@ -58,6 +58,7 @@ import Scanner
     ':'         { (Colon, $$) }
     ':='        { (ColEq, $$) }
     '='         { (Equals, $$) }
+    --'?'         { (QueMark, $$) }
     BEGIN       { (Begin, $$) }
     CONST       { (Const, $$) }
     DO          { (Do, $$) }
@@ -69,6 +70,8 @@ import Scanner
     THEN        { (Then, $$) }
     VAR         { (Var, $$) }
     WHILE       { (While, $$) }
+    REPEAT      { (Repeat, $$) }
+    UNTIL       { (Until, $$) }
     LITINT      { (LitInt {}, _) }
     ID          { (Id {}, _) }
     '+'         { (Op {opName="+"},   _) }
@@ -114,6 +117,8 @@ command
         { CmdIf {ciCond = $2, ciThen = $4, ciElse = $6, cmdSrcPos = $1} }
     | WHILE expression DO command
         { CmdWhile {cwCond = $2, cwBody = $4, cmdSrcPos = $1} }
+    | REPEAT command UNTIL expression
+        { CmdRepeat {crBody = $2, crUntil = $4, cmdSrcPos = $1} }
     | LET declarations IN command
         { CmdLet {clDecls = $2, clBody = $4, cmdSrcPos = $1} }
     | BEGIN commands END
@@ -169,6 +174,11 @@ expression
         { ExpApp {eaFun     = $2,
                   eaArgs    = [$1,$3],
                   expSrcPos = srcPos $1} }
+    -- | expression '?' expression ':' expression
+    --     { ExpCond {ecCond = $1,
+    --                ecExp1 = $3,
+    --                ecExp2 = $5,
+    --                expSrcPos = srcPos $1} }
 
 
 primary_expression :: { Expression }
@@ -315,6 +325,7 @@ mkExpVarUnOp otsp =
     where
         onm = tspOpName otsp
         nm  = if onm == "-" then "neg" else onm
+
 
 
 -- | Test utility. Attempts to parse the given string input and,
