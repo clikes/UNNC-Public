@@ -14,3 +14,4 @@ in
                 n := n + d2
             end
     end
+a := b ? 2 : 3 

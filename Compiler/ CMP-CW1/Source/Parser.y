@@ -58,7 +58,7 @@ import Scanner
     ':'         { (Colon, $$) }
     ':='        { (ColEq, $$) }
     '='         { (Equals, $$) }
-    --'?'         { (QueMark, $$) }
+    '?'         { (QueMark, $$) }
     BEGIN       { (Begin, $$) }
     CONST       { (Const, $$) }
     DO          { (Do, $$) }
@@ -174,11 +174,11 @@ expression
         { ExpApp {eaFun     = $2,
                   eaArgs    = [$1,$3],
                   expSrcPos = srcPos $1} }
-    -- | expression '?' expression ':' expression
-    --     { ExpCond {ecCond = $1,
-    --                ecExp1 = $3,
-    --                ecExp2 = $5,
-    --                expSrcPos = srcPos $1} }
+    | expression '?' expression ':' expression
+        { ExpCond {ecCond   = $1,
+                   ecExp1   = $3,
+                   ecExp2   = $5,
+                   expSrcPos = srcPos $1} }
 
 
 primary_expression :: { Expression }

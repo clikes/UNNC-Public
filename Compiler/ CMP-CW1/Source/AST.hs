@@ -138,12 +138,12 @@ data Expression
           eaArgs    :: [Expression],    -- ^ Arguments
           expSrcPos :: SrcPos
       }
-    -- | ExpCond {
-    --       ecCond    :: Expression,
-    --       ecExp1    :: Expression,
-    --       ecExp2    :: Expression,
-    --       expSrcPos :: SrcPos
-  -- }
+    | ExpCond {
+          ecCond    :: Expression,
+          ecExp1    :: Expression,
+          ecExp2    :: Expression,
+          expSrcPos :: SrcPos
+      }
 
 
 instance HasSrcPos Expression where
