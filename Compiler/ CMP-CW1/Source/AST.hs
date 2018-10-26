@@ -94,7 +94,7 @@ data Command
     | CmdIf {
           ciCond    :: Expression,      -- ^ Condition
           ciThen    :: Command,         -- ^ Then-branch
-          ciElse    :: Command,         -- ^ Else-branch
+          ciElse    :: Maybe Command,         -- ^ Else-branch
           cmdSrcPos :: SrcPos
       }
     -- | While-loop

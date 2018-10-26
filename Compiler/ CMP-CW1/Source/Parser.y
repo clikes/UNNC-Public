@@ -113,8 +113,10 @@ command
         { CmdAssign {caVar = $1, caVal=$3, cmdSrcPos = srcPos $1} }
     | var_expression '(' expressions ')'
         { CmdCall {ccProc = $1, ccArgs = $3, cmdSrcPos = srcPos $1} }
+    | IF expression THEN command
+        { CmdIf {ciCond = $2, ciThen = $4, ciElse =Nothing, cmdSrcPos = $1} }
     | IF expression THEN command ELSE command
-        { CmdIf {ciCond = $2, ciThen = $4, ciElse = $6, cmdSrcPos = $1} }
+        { CmdIf {ciCond = $2, ciThen = $4, ciElse = Just $6, cmdSrcPos = $1} }
     | WHILE expression DO command
         { CmdWhile {cwCond = $2, cwBody = $4, cmdSrcPos = $1} }
     | REPEAT command UNTIL expression
@@ -128,6 +130,25 @@ command
               CmdSeq {csCmds = $2, cmdSrcPos = srcPos $2}
         }
 
+-- ifcommand :: { ifcommand }
+-- ifcommand
+--     : IF expression THEN command ELSE command
+--         { CmdIf {ciCond = $2, ciThen = $4, ciElse = Just $6, cmdSrcPos = $1} }
+--     | IF expression THEN command
+--         { CmdIf {ciCond = $2, ciThen = $4, ciElse = Nothing, cmdSrcPos = $1} }
+--     -- | ifcommand ELSE command
+--     --     { $1 : $3 }
+    
+    
+
+-- elsecommand :: { elsecommand }
+-- elsecommand
+--     : ELSE command
+--         {}
+--     -- | ELSEIF expression THEN command
+--     --     {CmdElseIf {ceCond = $2, ceThen = $4, cmdSrcPos = $1} }
+--     -- | ELSEIF expression THEN command elsecommand
+--     --     {CmdElseIf {ceCond = $2, ceThen = $4, cmdSrcPos = $1} : $5 }
 
 expressions :: { [Expression] }
 expressions : expression { [$1] }

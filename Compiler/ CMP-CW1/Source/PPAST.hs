@@ -55,7 +55,7 @@ ppCommand n (CmdIf {ciCond = e, ciThen = c1, ciElse = c2, cmdSrcPos = sp}) =
     indent n . showString "CmdIf" . spc . ppSrcPos sp . nl
     . ppExpression (n+1) e
     . ppCommand (n+1) c1
-    . ppCommand (n+1) c2
+    . maybe id (ppCommand (n+1)) c2
 ppCommand n (CmdWhile {cwCond = e, cwBody = c, cmdSrcPos = sp}) =
     indent n . showString "CmdWhile" . spc . ppSrcPos sp . nl
     . ppExpression (n+1) e
