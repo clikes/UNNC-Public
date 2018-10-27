@@ -46,6 +46,7 @@ data Token
     | While     -- ^ \"while\"
     | Repeat    -- ^ \"repeat\"
     | Until     -- ^ \"until\"
+    | ElseIf    -- ^ \"elseif\"
 
     -- Tokens with variable spellings
     | LitInt {liVal :: Integer}         -- ^ Integer literals

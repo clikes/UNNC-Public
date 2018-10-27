@@ -94,9 +94,15 @@ data Command
     | CmdIf {
           ciCond    :: Expression,      -- ^ Condition
           ciThen    :: Command,         -- ^ Then-branch
-          ciElse    :: Maybe Command,         -- ^ Else-branch
+          ciElif    :: Maybe [Command],
+          ciElse    :: Maybe Command,   -- ^ Else-branch
           cmdSrcPos :: SrcPos
       }
+    | CmdElif {
+          ceElif    :: Expression,   -- ^ Elseif-branch
+          ceElThen  :: Command,
+          cmdSrcPos :: SrcPos
+    }
     -- | While-loop
     | CmdWhile {
           cwCond    :: Expression,      -- ^ Loop-condition
@@ -114,7 +120,11 @@ data Command
           crUntil   :: Expression,      -- ^ Loop-condition
           cmdSrcPos :: SrcPos
   }
-
+-- data CmdElif
+--       = CmdElif {
+--           ceElif    :: Maybe Expression,   -- ^ Elseif-branch
+--           ceElThen  :: Maybe Command
+--     }
 
 instance HasSrcPos Command where
     srcPos = cmdSrcPos

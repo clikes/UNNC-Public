@@ -68,6 +68,7 @@ import Scanner
     IN          { (In, $$) }
     LET         { (Let, $$) }
     THEN        { (Then, $$) }
+    ELSEIF      { (ElseIf, $$) }
     VAR         { (Var, $$) }
     WHILE       { (While, $$) }
     REPEAT      { (Repeat, $$) }
@@ -114,9 +115,15 @@ command
     | var_expression '(' expressions ')'
         { CmdCall {ccProc = $1, ccArgs = $3, cmdSrcPos = srcPos $1} }
     | IF expression THEN command
-        { CmdIf {ciCond = $2, ciThen = $4, ciElse =Nothing, cmdSrcPos = $1} }
+        { CmdIf {ciCond = $2, ciThen = $4, ciElif = Nothing, ciElse =Nothing, cmdSrcPos = $1} }
+    -- | IF expression THEN command elseifcommand
+    --     { CmdIf {ciCond = $2, ciThen = $4, ciElif = Just [$5], ciElse =Nothing, cmdSrcPos = $1} }
     | IF expression THEN command ELSE command
-        { CmdIf {ciCond = $2, ciThen = $4, ciElse = Just $6, cmdSrcPos = $1} }
+        { CmdIf {ciCond = $2, ciThen = $4, ciElif = Nothing, ciElse = Just $6, cmdSrcPos = $1} }
+    | IF expression THEN command elseifcommands
+        {CmdIf {ciCond = $2, ciThen = $4, ciElif = Just $5, ciElse = Nothing, cmdSrcPos = $1} }
+    | IF expression THEN command elseifcommands ELSE command
+        {CmdIf {ciCond = $2, ciThen = $4, ciElif = Just $5, ciElse = Just $7, cmdSrcPos = $1} }
     | WHILE expression DO command
         { CmdWhile {cwCond = $2, cwBody = $4, cmdSrcPos = $1} }
     | REPEAT command UNTIL expression
@@ -129,7 +136,7 @@ command
           else
               CmdSeq {csCmds = $2, cmdSrcPos = srcPos $2}
         }
-
+--if a>b then a:=b else b:=a
 -- ifcommand :: { ifcommand }
 -- ifcommand
 --     : IF expression THEN command ELSE command
@@ -139,16 +146,14 @@ command
 --     -- | ifcommand ELSE command
 --     --     { $1 : $3 }
     
-    
+elseifcommands :: { [elseifcommand] }
+elseifcommands : elseifcommand { [$1] }
+                | elseifcommand elseifcommands { $1 : $2 }
 
--- elsecommand :: { elsecommand }
--- elsecommand
---     : ELSE command
---         {}
---     -- | ELSEIF expression THEN command
---     --     {CmdElseIf {ceCond = $2, ceThen = $4, cmdSrcPos = $1} }
---     -- | ELSEIF expression THEN command elsecommand
---     --     {CmdElseIf {ceCond = $2, ceThen = $4, cmdSrcPos = $1} : $5 }
+elseifcommand :: { Command }
+elseifcommand
+    : ELSEIF expression THEN command
+        {CmdElif {ceElif = $2, ceElThen = $4, cmdSrcPos = $1} }
 
 expressions :: { [Expression] }
 expressions : expression { [$1] }
