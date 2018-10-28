@@ -81,6 +81,8 @@ ppCommand n (CmdRepeat {crBody = c, crUntil = ds, cmdSrcPos = sp}) =
 ppExpression :: Int -> Expression -> ShowS
 ppExpression n (ExpLitInt {eliVal = v}) = 
     indent n . showString "ExpLitInt". spc . shows v . nl
+ppExpression n (ExpLitChar {elcVal = v}) = 
+    indent n . showString "ExpLitChar". spc . shows v . nl
 ppExpression n (ExpVar {evVar = v}) =
     indent n . showString "ExpVar" . spc . ppName v . nl
 ppExpression n (ExpApp {eaFun = f, eaArgs = es, expSrcPos = sp}) =
@@ -92,6 +94,7 @@ ppExpression n (ExpCond {ecCond = c, ecExp1 = e1, ecExp2 = e2, expSrcPos = sp}) 
     . ppExpression (n+1) c
     . ppExpression (n+1) e1
     . ppExpression (n+1) e2
+
 
 
 ------------------------------------------------------------------------------

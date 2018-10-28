@@ -123,7 +123,10 @@ scanner cont = P $ scan
                                         | otherwise                     = do
                                                                                emitErrD (SrcPos l (c+1))
                                                                                         ("Lexicalerror: Illegal \
-                                                                                         \character define")
+                                                                                         \character define\n"
+                                                                                         ++ show x 
+                                                                                         ++"\n"
+                                                                                         ++ show b)
                                                                                scan l (c + 1) xs'
                                         where 
                                             (tail, xs') = span (=='\'') xs
