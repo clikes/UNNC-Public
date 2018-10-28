@@ -14,4 +14,11 @@ in
                 n := n + d2
             end
     end
-a := b ? 2 : 3 
+let var c : Character := 'a'   
+in 
+begin
+c := '?';
+c := '\n';
+c := '\\';
+
+end
