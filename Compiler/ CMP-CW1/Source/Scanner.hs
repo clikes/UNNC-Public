@@ -69,6 +69,9 @@ isOpChr '|'  = True
 isOpChr '~'  = True
 isOpChr _    = False
 
+isColn :: Char -> Bool
+isColn '\''   = False
+isColn _      = True
 
 -- Tab stop separation
 tabWidth :: Int
@@ -116,18 +119,17 @@ scanner cont = P $ scan
                                            scan l (c + 1) s
 
         -- scanLitChar :: Int -> Int -> String -> D a
-        scanLitChar l c (x : b : xs)    | x == '\\'                     = scanEscChar l c xs
-                                        | b == '\''                     = retTkn (LitChar x) l c (c + 2) xs
+        scanLitChar l c (x : b : xs)    | b == '\''                     = retTkn (LitChar x) l (c+1) (c + 2) xs
                                         | otherwise                     = do
-                                                                               emitErrD (SrcPos l c)
-                                                                                        ("Lexical error: Illegal \
-                                                                                         \character "
-                                                                                         ++ show x
-                                                                                         ++ " (discarded)")
-                                                                               scan l (c + 1) xs
+                                                                               emitErrD (SrcPos l (c+1))
+                                                                                        ("Lexicalerror: Illegal \
+                                                                                         \character define")
+                                                                               scan l (c + 1) xs'
+                                        where 
+                                            (tail, xs') = span (=='\'') xs
 
         --scanEscChar :: Int -> Int -> String -> D a
-        scanEscChar l c (x : '\'' :xs)  | elem x ['n','r', 't', '\\', '\''] = retTkn (LitChar x) l c (c + 2) xs
+        scanEscChar l c (x : '\'' :xs)  | elem x ['n','r', 't', '\\', '\''] = retTkn (LitChar x) l (c+1) (c + 2) xs
                                         | otherwise                     = do
                                                                        emitErrD (SrcPos l c)
                                                                                 ("Lexical error: Illegal \
