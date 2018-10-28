@@ -119,7 +119,19 @@ scanner cont = P $ scan
                                            scan l (c + 1) s
 
         -- scanLitChar :: Int -> Int -> String -> D a
-        scanLitChar l c (x : b : xs)    | b == '\''                     = retTkn (LitChar x) l (c+1) (c + 2) xs
+        -- scanLitChar l c (x : b : xs)    | b == '\''                     = retTkn (LitChar x) l (c+1) (c + 2) xs
+        --                                 | otherwise                     = do
+        --                                                                        emitErrD (SrcPos l (c+1))
+        --                                                                                 ("Lexicalerror: Illegal \
+        --                                                                                  \character define\n"
+        --                                                                                  ++ show x 
+        --                                                                                  ++"\n"
+        --                                                                                  ++ show b)
+        --                                                                        scan l (c + 1) xs'
+        --                                 where 
+        --                                     (tail, xs') = span (=='\'') xs
+        scanLitChar l c (x : b : xs)    | x == '\\'                     = scanEscChar l (c+1) (b:xs)
+                                        | b == '\''                     = retTkn (LitChar x) l (c+1) (c + 2) xs
                                         | otherwise                     = do
                                                                                emitErrD (SrcPos l (c+1))
                                                                                         ("Lexicalerror: Illegal \
@@ -132,14 +144,17 @@ scanner cont = P $ scan
                                             (tail, xs') = span (=='\'') xs
 
         --scanEscChar :: Int -> Int -> String -> D a
-        scanEscChar l c (x : '\'' :xs)  | elem x ['n','r', 't', '\\', '\''] = retTkn (LitChar x) l (c+1) (c + 2) xs
+        scanEscChar l c (x : '\'' :xs)  | elem x ['n','r', 't', '\\', '\''] = retTkn (LitChar (toEscChar x)) l (c+1) (c + 2) xs
                                         | otherwise                     = do
-                                                                       emitErrD (SrcPos l c)
-                                                                                ("Lexical error: Illegal \
-                                                                                 \character "
-                                                                                 ++ show x
-                                                                                 ++ " (discarded)")
-                                                                       scan l (c + 1) xs
+                                                                               emitErrD (SrcPos l (c+1))
+                                                                                        ("Lexicalerror: Illegal \
+                                                                                         \character define\n"
+                                                                                         ++ show x 
+                                                                                         ++"\n"
+                                                                                         ++ "\'")
+                                                                               scan l (c + 1) xs'
+                                        where 
+                                            (tail, xs') = span (=='\'') xs
             
         -- scanLitInt :: Int -> Int -> Char -> String -> D a
         scanLitInt l c x s = retTkn (LitInt (read (x : tail))) l c c' s'
@@ -195,6 +210,12 @@ scanner cont = P $ scan
 scan :: String -> D [(Token, SrcPos)]
 scan s = runP (scanner (acceptToken [])) s
 
+toEscChar :: Char -> Char
+toEscChar x     | x == 'n' = '\n'
+                | x == 'r' = '\r'
+                | x == 't' = '\t'
+                | x == '\\'= '\\'
+                | x == '\''= '\''
 
 -- | Test utility. Scans the input and, if successful, prints the resulting
 -- tokens.
