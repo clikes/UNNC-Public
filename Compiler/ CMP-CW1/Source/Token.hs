@@ -50,6 +50,7 @@ data Token
 
     -- Tokens with variable spellings
     | LitInt {liVal :: Integer}         -- ^ Integer literals
+    | LitChar{lcVal :: Char}            -- ^ Character literals
     | Id     {idName :: Name}           -- ^ Identifiers
     | Op     {opName :: Name}           -- ^ Operators
 

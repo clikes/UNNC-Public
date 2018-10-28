@@ -152,7 +152,7 @@ elseifcommands : elseifcommand { [$1] }
 
 elseifcommand :: { Command }
 elseifcommand
-    : ELSEIF expression THEN command
+    : ELSEIF expression THEN command  
         {CmdElif {ceElif = $2, ceElThen = $4, cmdSrcPos = $1} }
 
 expressions :: { [Expression] }

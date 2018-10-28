@@ -21,6 +21,8 @@ module AST (
     Declaration (..),   -- Not abstract. Instances: HasSrcPos.
     TypeDenoter (..)    -- Not abstract. Instances: HasSrcPos.
 ) where
+--Char import
+import Data.Char
 
 -- HMTC module imports
 import Name
@@ -154,7 +156,16 @@ data Expression
           ecExp2    :: Expression,
           expSrcPos :: SrcPos
       }
+    | ExpLitChar {
+          elcVal    :: Char,
+          expSrcPos :: SrcPos
+      }
 
+data LiteralChar = Graphic {val :: Char}| EscChar {val :: Char};
+
+-- type Graphic  = Char
+
+-- type EscChar = Char
 
 instance HasSrcPos Expression where
     srcPos = expSrcPos

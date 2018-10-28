@@ -101,6 +101,8 @@ scanner cont = P $ scan
         scan l c (';' : s)  = retTkn Semicol l c (c + 1) s
         scan l c ('?' : s)  = retTkn QueMark l c (c + 1) s
         --scan l c (':' : s)  = retTkn Colon l c (c + 1) s
+        -- Scan litral char
+        scan l c ('\'' : s)  = scanLitChar l c s
         -- Scan numeric literals, operators, identifiers, and keywords
         scan l c (x : s) | isDigit x = scanLitInt l c x s
                          | isAlpha x = scanIdOrKwd l c x s
@@ -113,7 +115,27 @@ scanner cont = P $ scan
                                                      ++ " (discarded)")
                                            scan l (c + 1) s
 
+        -- scanLitChar :: Int -> Int -> String -> D a
+        scanLitChar l c (x : b : xs)    | x == '\\'                     = scanEscChar l c xs
+                                        | b == '\''                     = retTkn (LitChar x) l c (c + 2) xs
+                                        | otherwise                     = do
+                                                                               emitErrD (SrcPos l c)
+                                                                                        ("Lexical error: Illegal \
+                                                                                         \character "
+                                                                                         ++ show x
+                                                                                         ++ " (discarded)")
+                                                                               scan l (c + 1) xs
 
+        --scanEscChar :: Int -> Int -> String -> D a
+        scanEscChar l c (x : '\'' :xs)  | elem x ['n','r', 't', '\\', '\''] = retTkn (LitChar x) l c (c + 2) xs
+                                        | otherwise                     = do
+                                                                       emitErrD (SrcPos l c)
+                                                                                ("Lexical error: Illegal \
+                                                                                 \character "
+                                                                                 ++ show x
+                                                                                 ++ " (discarded)")
+                                                                       scan l (c + 1) xs
+            
         -- scanLitInt :: Int -> Int -> Char -> String -> D a
         scanLitInt l c x s = retTkn (LitInt (read (x : tail))) l c c' s'
             where
