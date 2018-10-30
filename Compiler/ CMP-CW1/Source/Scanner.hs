@@ -103,13 +103,12 @@ scanner cont = P $ scan
         scan l c (',' : s)  = retTkn Comma l c (c + 1) s
         scan l c (';' : s)  = retTkn Semicol l c (c + 1) s
         scan l c ('?' : s)  = retTkn QueMark l c (c + 1) s
-        --scan l c (':' : s)  = retTkn Colon l c (c + 1) s
-        -- Scan litral char
-        scan l c ('\'' : s)  = scanLitChar l c s
         -- Scan numeric literals, operators, identifiers, and keywords
         scan l c (x : s) | isDigit x = scanLitInt l c x s
                          | isAlpha x = scanIdOrKwd l c x s
                          | isOpChr x = scanOperator l c x s
+                         --when scanner read a ' means it can run into a lit char scan mode.
+                         | x == '\'' = scanLitChar l c s
                          | otherwise = do
                                            emitErrD (SrcPos l c)
                                                     ("Lexical error: Illegal \
@@ -130,8 +129,9 @@ scanner cont = P $ scan
         --                                                                        scan l (c + 1) xs'
         --                                 where 
         --                                     (tail, xs') = span (=='\'') xs
+        --when scanner read a ' means it can run into a lit char scan mode.
         scanLitChar l c (x : b : xs)    | x == '\\'                     = scanEscChar l (c+1) (b:xs)
-                                        | b == '\''                     = retTkn (LitChar x) l (c+1) (c + 2) xs
+                                        | b == '\'' && x /= '\''        = retTkn (LitChar x) l (c+1) (c + 2) xs
                                         | otherwise                     = do
                                                                                emitErrD (SrcPos l (c+1))
                                                                                         ("Lexicalerror: Illegal \
@@ -142,17 +142,17 @@ scanner cont = P $ scan
                                                                                scan l (c + 1) xs'
                                         where 
                                             (tail, xs') = span (=='\'') xs
-
+        --if the character is accept escape character then cast it to the esc character by function toEscChar 
         --scanEscChar :: Int -> Int -> String -> D a
-        scanEscChar l c (x : '\'' :xs)  | elem x ['n','r', 't', '\\', '\''] = retTkn (LitChar (toEscChar x)) l (c+1) (c + 2) xs
+        scanEscChar l c (x : b :xs)     | elem x ['n','r', 't', '\\', '\''] && b == '\''    = retTkn (LitChar (toEscChar x)) l (c+1) (c + 2) xs
                                         | otherwise                     = do
-                                                                               emitErrD (SrcPos l (c+1))
-                                                                                        ("Lexicalerror: Illegal \
-                                                                                         \character define\n"
-                                                                                         ++ show x 
-                                                                                         ++"\n"
-                                                                                         ++ "\'")
-                                                                               scan l (c + 1) xs'
+                                                                                                   emitErrD (SrcPos l (c+1))
+                                                                                                            ("Lexicalerror: Illegal \
+                                                                                                             \character define\n"
+                                                                                                             ++ show x 
+                                                                                                             ++"\n"
+                                                                                                             ++ "\'")
+                                                                                                   scan l (c + 1) xs'
                                         where 
                                             (tail, xs') = span (=='\'') xs
             
@@ -210,6 +210,7 @@ scanner cont = P $ scan
 scan :: String -> D [(Token, SrcPos)]
 scan s = runP (scanner (acceptToken [])) s
 
+--return the esc char by the escape character with out \ in front of it 
 toEscChar :: Char -> Char
 toEscChar x     | x == 'n' = '\n'
                 | x == 'r' = '\r'
