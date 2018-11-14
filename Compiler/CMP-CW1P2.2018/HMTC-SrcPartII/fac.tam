@@ -1,0 +1,18 @@
+GETINT
+CALL fac
+PUTINT
+HALT
+fac:
+LOADL 1
+LOAD [LB - 1]
+LOADL 1
+LSS
+JUMPIFNZ fac_end
+LOAD [LB - 1]
+LOADL 1
+SUB
+CALL fac
+LOAD [LB - 1]
+MUL
+fac_end:
+RETURN 1 1
