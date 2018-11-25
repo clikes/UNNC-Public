@@ -1,0 +1,44 @@
+﻿  CG Project.cpp
+CG Project.obj : error LNK2019: 无法解析的外部符号 "void __cdecl cv::fastFree(void *)" (?fastFree@cv@@YAXPAX@Z)，该符号在函数 "public: __thiscall cv::Mat::~Mat(void)" (??1Mat@cv@@QAE@XZ) 中被引用
+CG Project.obj : error LNK2019: 无法解析的外部符号 "public: void __thiscall cv::Mat::deallocate(void)" (?deallocate@Mat@cv@@QAEXXZ)，该符号在函数 "public: void __thiscall cv::Mat::release(void)" (?release@Mat@cv@@QAEXXZ) 中被引用
+CG Project.obj : error LNK2019: 无法解析的外部符号 "int __cdecl cv::_interlockedExchangeAdd(int *,int)" (?_interlockedExchangeAdd@cv@@YAHPAHH@Z)，该符号在函数 "public: void __thiscall cv::Mat::release(void)" (?release@Mat@cv@@QAEXXZ) 中被引用
+CG Project.obj : error LNK2019: 无法解析的外部符号 "class cv::Mat __cdecl cv::imread(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &,int)" (?imread@cv@@YA?AVMat@1@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@H@Z)，该符号在函数 "void __cdecl display(void)" (?display@@YAXXZ) 中被引用
+D:\Program Files\opencv\build\x64\vc14\lib\opencv_calib3d2413.lib : warning LNK4272: 库计算机类型“x64”与目标计算机类型“x86”冲突
+D:\Program Files\opencv\build\x64\vc14\lib\opencv_calib3d2413d.lib : warning LNK4272: 库计算机类型“x64”与目标计算机类型“x86”冲突
+D:\Program Files\opencv\build\x64\vc14\lib\opencv_contrib2413.lib : warning LNK4272: 库计算机类型“x64”与目标计算机类型“x86”冲突
+D:\Program Files\opencv\build\x64\vc14\lib\opencv_contrib2413d.lib : warning LNK4272: 库计算机类型“x64”与目标计算机类型“x86”冲突
+D:\Program Files\opencv\build\x64\vc14\lib\opencv_core2413.lib : warning LNK4272: 库计算机类型“x64”与目标计算机类型“x86”冲突
+D:\Program Files\opencv\build\x64\vc14\lib\opencv_core2413d.lib : warning LNK4272: 库计算机类型“x64”与目标计算机类型“x86”冲突
+D:\Program Files\opencv\build\x64\vc14\lib\opencv_features2d2413.lib : warning LNK4272: 库计算机类型“x64”与目标计算机类型“x86”冲突
+D:\Program Files\opencv\build\x64\vc14\lib\opencv_features2d2413d.lib : warning LNK4272: 库计算机类型“x64”与目标计算机类型“x86”冲突
+D:\Program Files\opencv\build\x64\vc14\lib\opencv_flann2413.lib : warning LNK4272: 库计算机类型“x64”与目标计算机类型“x86”冲突
+D:\Program Files\opencv\build\x64\vc14\lib\opencv_flann2413d.lib : warning LNK4272: 库计算机类型“x64”与目标计算机类型“x86”冲突
+D:\Program Files\opencv\build\x64\vc14\lib\opencv_gpu2413.lib : warning LNK4272: 库计算机类型“x64”与目标计算机类型“x86”冲突
+D:\Program Files\opencv\build\x64\vc14\lib\opencv_gpu2413d.lib : warning LNK4272: 库计算机类型“x64”与目标计算机类型“x86”冲突
+D:\Program Files\opencv\build\x64\vc14\lib\opencv_highgui2413.lib : warning LNK4272: 库计算机类型“x64”与目标计算机类型“x86”冲突
+D:\Program Files\opencv\build\x64\vc14\lib\opencv_highgui2413d.lib : warning LNK4272: 库计算机类型“x64”与目标计算机类型“x86”冲突
+D:\Program Files\opencv\build\x64\vc14\lib\opencv_imgproc2413.lib : warning LNK4272: 库计算机类型“x64”与目标计算机类型“x86”冲突
+D:\Program Files\opencv\build\x64\vc14\lib\opencv_imgproc2413d.lib : warning LNK4272: 库计算机类型“x64”与目标计算机类型“x86”冲突
+D:\Program Files\opencv\build\x64\vc14\lib\opencv_legacy2413.lib : warning LNK4272: 库计算机类型“x64”与目标计算机类型“x86”冲突
+D:\Program Files\opencv\build\x64\vc14\lib\opencv_legacy2413d.lib : warning LNK4272: 库计算机类型“x64”与目标计算机类型“x86”冲突
+D:\Program Files\opencv\build\x64\vc14\lib\opencv_ml2413.lib : warning LNK4272: 库计算机类型“x64”与目标计算机类型“x86”冲突
+D:\Program Files\opencv\build\x64\vc14\lib\opencv_ml2413d.lib : warning LNK4272: 库计算机类型“x64”与目标计算机类型“x86”冲突
+D:\Program Files\opencv\build\x64\vc14\lib\opencv_nonfree2413.lib : warning LNK4272: 库计算机类型“x64”与目标计算机类型“x86”冲突
+D:\Program Files\opencv\build\x64\vc14\lib\opencv_nonfree2413d.lib : warning LNK4272: 库计算机类型“x64”与目标计算机类型“x86”冲突
+D:\Program Files\opencv\build\x64\vc14\lib\opencv_objdetect2413.lib : warning LNK4272: 库计算机类型“x64”与目标计算机类型“x86”冲突
+D:\Program Files\opencv\build\x64\vc14\lib\opencv_objdetect2413d.lib : warning LNK4272: 库计算机类型“x64”与目标计算机类型“x86”冲突
+D:\Program Files\opencv\build\x64\vc14\lib\opencv_ocl2413.lib : warning LNK4272: 库计算机类型“x64”与目标计算机类型“x86”冲突
+D:\Program Files\opencv\build\x64\vc14\lib\opencv_ocl2413d.lib : warning LNK4272: 库计算机类型“x64”与目标计算机类型“x86”冲突
+D:\Program Files\opencv\build\x64\vc14\lib\opencv_photo2413.lib : warning LNK4272: 库计算机类型“x64”与目标计算机类型“x86”冲突
+D:\Program Files\opencv\build\x64\vc14\lib\opencv_photo2413d.lib : warning LNK4272: 库计算机类型“x64”与目标计算机类型“x86”冲突
+D:\Program Files\opencv\build\x64\vc14\lib\opencv_stitching2413.lib : warning LNK4272: 库计算机类型“x64”与目标计算机类型“x86”冲突
+D:\Program Files\opencv\build\x64\vc14\lib\opencv_stitching2413d.lib : warning LNK4272: 库计算机类型“x64”与目标计算机类型“x86”冲突
+D:\Program Files\opencv\build\x64\vc14\lib\opencv_superres2413.lib : warning LNK4272: 库计算机类型“x64”与目标计算机类型“x86”冲突
+D:\Program Files\opencv\build\x64\vc14\lib\opencv_superres2413d.lib : warning LNK4272: 库计算机类型“x64”与目标计算机类型“x86”冲突
+D:\Program Files\opencv\build\x64\vc14\lib\opencv_ts2413.lib : warning LNK4272: 库计算机类型“x64”与目标计算机类型“x86”冲突
+D:\Program Files\opencv\build\x64\vc14\lib\opencv_ts2413d.lib : warning LNK4272: 库计算机类型“x64”与目标计算机类型“x86”冲突
+D:\Program Files\opencv\build\x64\vc14\lib\opencv_video2413.lib : warning LNK4272: 库计算机类型“x64”与目标计算机类型“x86”冲突
+D:\Program Files\opencv\build\x64\vc14\lib\opencv_video2413d.lib : warning LNK4272: 库计算机类型“x64”与目标计算机类型“x86”冲突
+D:\Program Files\opencv\build\x64\vc14\lib\opencv_videostab2413.lib : warning LNK4272: 库计算机类型“x64”与目标计算机类型“x86”冲突
+D:\Program Files\opencv\build\x64\vc14\lib\opencv_videostab2413d.lib : warning LNK4272: 库计算机类型“x64”与目标计算机类型“x86”冲突
+H:\UNNC-Public\Graphic\Project\CG Project\Debug\CG Project.exe : fatal error LNK1120: 4 个无法解析的外部命令
