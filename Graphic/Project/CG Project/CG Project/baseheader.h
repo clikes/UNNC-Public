@@ -7,6 +7,7 @@
 #include <opencv2/opencv.hpp>
 #include <glm/vec3.hpp> 
 #include <stdlib.h>
+#define FRAME_TIME 33
 using namespace cv;
 using namespace glm;
 class Vector3 : public glm::vec3

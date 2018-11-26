@@ -1,2 +1,5 @@
-﻿  Texture.cpp
+﻿  main.cpp
+h:\unnc-public\graphic\project\cg project\cg project\main.cpp(54): warning C4244: “参数”: 从“int”转换到“float”，可能丢失数据
+h:\unnc-public\graphic\project\cg project\cg project\main.cpp(69): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
+h:\unnc-public\graphic\project\cg project\cg project\main.cpp(327): warning C4244: “参数”: 从“int”转换到“float”，可能丢失数据
   CG Project.vcxproj -> H:\UNNC-Public\Graphic\Project\CG Project\x64\Debug\CG Project.exe

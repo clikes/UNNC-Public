@@ -1,7 +1,7 @@
 #include "Draw.h"
 #include "Texture.h"
 GLUquadricObj * quad;
-void DrawInit()
+void InitDraw()
 {
 	quad = gluNewQuadric();
 }
@@ -10,7 +10,14 @@ void DrawSphere(Planet* planet)
 {
 
 	gluQuadricTexture(quad, true);
-	gluSphere(quad, planet->radius, 32, 32);
+	if (planet->isAsteroid) {
+		glRotatef(planet->rotateAngle, planet->x, planet->y, planet->z);
+		gluSphere(quad, planet->radius, planet->slide , planet->stack); //let astroind have different shape
+	}
+	else {
+		gluSphere(quad, planet->radius, 32, 64);
+	}
+	
 	
 }
 
