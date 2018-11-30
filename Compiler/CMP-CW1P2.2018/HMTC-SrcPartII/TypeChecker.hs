@@ -110,6 +110,11 @@ chkCmd env (A.CmdWhile {A.cwCond = e, A.cwBody = c, A.cmdSrcPos = sp}) = do
     e' <- chkTpExp env e Boolean                        -- env |- e : Boolean
     c' <- chkCmd env c                                  -- env |- c
     return (CmdWhile {cwCond = e', cwBody = c', cmdSrcPos = sp})
+-- T-REPEAT
+chkCmd env (A.CmdRepeat { A.crBody = c, A.crCond = e, A.cmdSrcPos = sp}) = do
+    c' <- chkCmd env c                                  -- env |- c
+    e' <- chkTpExp env e Boolean                        -- env |- e : Boolean
+    return (CmdRepeat { crBody = c', crCond = e', cmdSrcPos = sp})
 -- T-LET
 chkCmd env (A.CmdLet {A.clDecls = ds, A.clBody = c, A.cmdSrcPos = sp}) = do
     (ds', env') <- mfix $ \ ~(_, env') ->               -- env;env'|- ds | env'
@@ -401,8 +406,16 @@ infTpExp env (A.ExpPrj {A.epRcd = e, A.epFld = f, A.expSrcPos = sp}) = do
     where
         notAFieldMsg f rt = "The type \"" ++ show rt
                             ++ "\" does not contain any field \"" ++ f ++ "\"" 
-
-
+-- T-COND
+infTpExp env (A.ExpCond {A.ecCond = e1, A.ecTrue = e2, A.ecFalse = e3, A.expSrcPos = sp}) = do
+    e1' <- chkTpExp env e1 Boolean
+    (t1, e2') <- infTpExp env e2
+    (t2, e3') <- infTpExp env e3
+    if t1 == t2 then do
+        return (t1, ExpCond {ecCond = e1', ecTrue = e2', ecFalse = e3', expType = t1, expSrcPos = sp})
+    else do
+        emitErrD sp ("Two type should be the same")
+        return (t1, ExpCond {ecCond = e1', ecTrue = e2', ecFalse = e3', expType = t1, expSrcPos = sp})
 -- Check that expression is well-typed in the given environment and
 -- infer its type assuming it should be an non-reference type:
 --

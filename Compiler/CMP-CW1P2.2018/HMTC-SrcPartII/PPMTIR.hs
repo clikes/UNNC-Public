@@ -62,6 +62,10 @@ ppCommand n (CmdWhile {cwCond = e, cwBody = c, cmdSrcPos = sp}) =
     indent n . showString "CmdWhile" . spc . ppSrcPos sp . nl
     . ppExpression (n+1) e
     . ppCommand (n+1) c
+ppCommand n (CmdRepeat {crBody = c, crCond = e, cmdSrcPos = sp}) =
+    indent n . showString "CmdRepeat" . spc . ppSrcPos sp . nl
+    . ppCommand (n+1) c
+    . ppExpression (n+1) e
 ppCommand n (CmdLet {clDecls = ds, clBody = c, cmdSrcPos = sp}) =
     indent n . showString "CmdLet" . spc . ppSrcPos sp . nl
     . ppSeq (n+1) ppDeclaration ds
@@ -114,8 +118,12 @@ ppExpression n (ExpPrj {epRcd = r, epFld = f, expType = t, expSrcPos = sp}) =
     . ppExpression (n+1) r
     . indent (n+1) . ppName f . nl
     . indent n . showString ": " . shows t . nl
-
-
+ppExpression n (ExpCond {ecCond = e1, ecTrue = e2, ecFalse = e3, expType = t, expSrcPos = sp})=
+    indent n . showString "ExpCond" . spc . ppSrcPos sp . nl
+    . ppExpression (n+1) e1
+    . ppExpression (n+1) e2
+    . ppExpression (n+1) e3
+    . indent n . showString ": " . shows t . nl
 ------------------------------------------------------------------------------
 -- Pretty printing of declarations
 ------------------------------------------------------------------------------

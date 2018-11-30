@@ -75,6 +75,12 @@ data Command
           cwBody    :: Command,         -- ^ Loop-body
           cmdSrcPos :: SrcPos
       }
+    -- | Repeat-loop
+    | CmdRepeat {
+          crBody    :: Command,         -- ^ Loop-body
+          crCond    :: Expression,      -- ^ Loop-condition
+          cmdSrcPos :: SrcPos
+      }
     -- | Let-command
     | CmdLet {
           clDecls   :: [Declaration],   -- ^ Declarations
@@ -159,7 +165,14 @@ data Expression
           expType   :: Type,
           expSrcPos :: SrcPos
       }
-
+    -- | Conditional expression
+    | ExpCond {
+          ecCond    :: Expression,      -- ^ Condition
+          ecTrue    :: Expression,      -- ^ Value if condition true
+          ecFalse   :: Expression,      -- ^ Value if condition false
+          expType   :: Type,
+          expSrcPos :: SrcPos
+      }
 
 instance HasSrcPos Expression where
     srcPos = expSrcPos
