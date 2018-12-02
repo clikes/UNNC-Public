@@ -1,0 +1,106 @@
+        LOADL       0                   
+        LOADL       1                   
+        LOADL       4                   
+        LOADL       0                   
+        LOADA       [SB + 1]            
+        LOADA       [SB + 3]            
+        CALL        #0_p                
+        LOAD        [SB + 3]            
+        CALL        putint              
+        POP         0 4                 
+        HALT                            
+#1_f:
+        LOAD        [LB - 2]            
+        LOAD        [LB - 2]            
+        MUL                             
+        LOAD        [LB - 1]            
+        LOAD        [LB - 1]            
+        MUL                             
+        ADD                             
+        RETURN      1 2                 
+#0_p:
+        LOADL       1                   
+        LOADL       6                   
+        LOADL       7                   
+        LOAD        [LB - 2]            
+        LOADI       0                   
+        LOADL       1000                
+        LSS                             
+        LOADA       [LB + 0]            
+        LOADCA      #2_readT            
+        CALLI                           
+        AND                             
+        JUMPIFZ     #5                  
+        LOAD        [LB - 2]            
+        LOADA       [LB + 0]            
+        LOADCA      #6_putint2          
+        CALLI                           
+        LOAD        [LB - 2]            
+        LOADI       0                   
+        LOAD        [SB + 2]            
+        LOADA       [LB + 0]            
+        LOADCA      #3_foo              
+        CALLI                           
+        CALL        #1_f                
+        LOADA       [LB + 6]            
+        LOAD        [LB - 1]            
+        CALL        #0_p                
+        POP         0 1                 
+        JUMP        #4                  
+#5:
+        LOAD        [LB - 2]            
+        LOADI       0                   
+        LOAD        [LB - 1]            
+        STOREI      0                   
+#4:
+        POP         0 3                 
+        RETURN      0 2                 
+#6_putint2:
+        LOAD        [LB - 1]            
+        LOADI       0                   
+        LOADL       3                   
+        LOAD        [LB - 1]            
+        LOADI       0                   
+        CALL        putint              
+        LOAD        [LB + 3]            
+        CALL        putint              
+        LOADL       2                   
+        LOADA       [LB + 0]            
+        LOADCA      #7_fie              
+        CALLI                           
+        CALL        putint              
+        LOADL       105                 
+        LOAD        [LB + 5]            
+        LOADA       [LB + 0]            
+        LOADCA      #8_q                
+        CALLI                           
+        POP         0 3                 
+        RETURN      0 1                 
+#8_q:
+        LOAD        [LB - 1]            
+        LOAD        [LB + 0]            
+        LOADI       0                   
+        LOADCA      #3_foo              
+        CALLI                           
+        CALL        putint              
+        RETURN      0 1                 
+#7_fie:
+        LOAD        [LB - 1]            
+        LOAD        [LB + 0]            
+        LOADI       0                   
+        LOADI       5                   
+        MUL                             
+        LOAD        [LB + 0]            
+        LOADI       4                   
+        MUL                             
+        RETURN      1 1                 
+#3_foo:
+        LOAD        [LB - 1]            
+        LOAD        [LB + 0]            
+        LOADI       4                   
+        SUB                             
+        RETURN      1 1                 
+#2_readT:
+        LOAD        [LB + 0]            
+        LOADI       3                   
+        RETURN      1 0                 

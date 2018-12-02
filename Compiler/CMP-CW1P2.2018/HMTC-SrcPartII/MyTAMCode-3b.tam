@@ -1,0 +1,18 @@
+        GETINT
+        CALL #fac
+        MUL
+        PUTINT
+        HALT
+#fac:
+        LOAD [LB - 1]
+        LOADL 1
+        SUB
+        LOAD [LB + 3]
+        JUMPIFZ #basecase
+        CALL #fac
+        MUL
+        RETURN 1 0
+#basecase:
+        POP 0 1
+        LOADL 1
+        RETURN 1 0

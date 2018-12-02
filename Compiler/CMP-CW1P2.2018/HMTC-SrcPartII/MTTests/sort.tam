@@ -1,0 +1,173 @@
+        LOADLB      0 12                
+        STORE       [SB + 10]           
+        JUMP        #17                 
+#16:
+        LOADA       [SB + 0]            
+        LOAD        [SB + 10]           
+        LOAD        [ST - 1]            
+        LOADL       0                   
+        LSS                             
+        JUMPIFNZ    #18                 
+        LOAD        [ST - 1]            
+        LOADL       10                  
+        LSS                             
+        JUMPIFNZ    #19                 
+#18:
+        CALL        ixerror             
+#19:
+        ADD                             
+        CALL        getint              
+        LOAD        [SB + 10]           
+        LOADL       1                   
+        ADD                             
+        STORE       [SB + 10]           
+#17:
+        LOAD        [SB + 10]           
+        LOADL       10                  
+        LSS                             
+        JUMPIFNZ    #16                 
+        LOADA       [SB + 0]            
+        CALL        #0_sort             
+        LOADL       0                   
+        STORE       [SB + 10]           
+        JUMP        #21                 
+#20:
+        LOADA       [SB + 0]            
+        LOAD        [SB + 10]           
+        LOAD        [ST - 1]            
+        LOADL       0                   
+        LSS                             
+        JUMPIFNZ    #22                 
+        LOAD        [ST - 1]            
+        LOADL       10                  
+        LSS                             
+        JUMPIFNZ    #23                 
+#22:
+        CALL        ixerror             
+#23:
+        ADD                             
+        LOADI       0                   
+        CALL        putint              
+        LOAD        [SB + 10]           
+        LOADL       1                   
+        ADD                             
+        STORE       [SB + 10]           
+#21:
+        LOAD        [SB + 10]           
+        LOADL       10                  
+        LSS                             
+        JUMPIFNZ    #20                 
+        POP         0 11                
+        HALT                            
+#0_sort:
+        LOADLB      0 3                 
+        STORE       [LB + 3]            
+        JUMP        #3                  
+#2:
+        LOAD        [LB + 3]            
+        LOADL       1                   
+        ADD                             
+        STORE       [LB + 4]            
+        JUMP        #5                  
+#4:
+        LOAD        [LB - 1]            
+        LOAD        [LB + 3]            
+        LOAD        [ST - 1]            
+        LOADL       0                   
+        LSS                             
+        JUMPIFNZ    #8                  
+        LOAD        [ST - 1]            
+        LOADL       10                  
+        LSS                             
+        JUMPIFNZ    #9                  
+#8:
+        CALL        ixerror             
+#9:
+        ADD                             
+        LOADI       0                   
+        LOAD        [LB - 1]            
+        LOAD        [LB + 4]            
+        LOAD        [ST - 1]            
+        LOADL       0                   
+        LSS                             
+        JUMPIFNZ    #10                 
+        LOAD        [ST - 1]            
+        LOADL       10                  
+        LSS                             
+        JUMPIFNZ    #11                 
+#10:
+        CALL        ixerror             
+#11:
+        ADD                             
+        LOADI       0                   
+        GTR                             
+        JUMPIFZ     #7                  
+        LOAD        [LB - 1]            
+        LOAD        [LB + 3]            
+        LOAD        [ST - 1]            
+        LOADL       0                   
+        LSS                             
+        JUMPIFNZ    #12                 
+        LOAD        [ST - 1]            
+        LOADL       10                  
+        LSS                             
+        JUMPIFNZ    #13                 
+#12:
+        CALL        ixerror             
+#13:
+        ADD                             
+        LOAD        [LB - 1]            
+        LOAD        [LB + 4]            
+        LOAD        [ST - 1]            
+        LOADL       0                   
+        LSS                             
+        JUMPIFNZ    #14                 
+        LOAD        [ST - 1]            
+        LOADL       10                  
+        LSS                             
+        JUMPIFNZ    #15                 
+#14:
+        CALL        ixerror             
+#15:
+        ADD                             
+        LOADA       [LB + 0]            
+        LOADCA      #1_swap             
+        CALLI                           
+        JUMP        #6                  
+#7:
+        CALL        skip                
+#6:
+        LOAD        [LB + 4]            
+        LOADL       1                   
+        ADD                             
+        STORE       [LB + 4]            
+#5:
+        LOAD        [LB + 4]            
+        LOADL       10                  
+        LSS                             
+        JUMPIFNZ    #4                  
+        LOAD        [LB + 3]            
+        LOADL       1                   
+        ADD                             
+        STORE       [LB + 3]            
+#3:
+        LOAD        [LB + 3]            
+        LOADL       9                   
+        LSS                             
+        JUMPIFNZ    #2                  
+        POP         0 2                 
+        RETURN      0 1                 
+#1_swap:
+        LOADL       0                   
+        LOAD        [LB - 2]            
+        LOADI       0                   
+        STORE       [LB + 3]            
+        LOAD        [LB - 1]            
+        LOADI       0                   
+        LOAD        [LB - 2]            
+        STOREI      0                   
+        LOAD        [LB + 3]            
+        LOAD        [LB - 1]            
+        STOREI      0                   
+        POP         0 1                 
+        RETURN      0 2                 

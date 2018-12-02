@@ -99,12 +99,13 @@ chkCmd env (A.CmdIf {A.ciCondThens = ecs, A.ciMbElse = mc2,
 -- YOUR CODE HERE: This has just been patched to work for the original
 -- if-then-else. The entire list ecs needs to be processed properly,
 -- and the fact that the else-branch is optional taken care of.
-    let (e, c1) = head ecs      -- Not wrong, but unnecessary
-    let c2      = fromJust mc2  -- Wrong: the else-branch might not be there.
-    e'  <- chkTpExp env e Boolean                       -- env |- e : Boolean
-    c1' <- chkCmd env c1                                -- env |- c1
-    c2' <- chkCmd env c2                                -- env |- c2
-    return (CmdIf {ciCond = e', ciThen = c1', ciElse = c2', cmdSrcPos = sp})
+    ecs' <- mapM (chkIfCmd env) ecs
+    case mc2 of 
+        Nothing -> do
+            return (CmdIf {ciCondThens = ecs', ciMbElse = Nothing, cmdSrcPos = sp})
+        Just cmd -> do
+        mc2' <- chkCmd env cmd
+        return (CmdIf {ciCondThens = ecs' , ciMbElse = Just mc2', cmdSrcPos = sp})
 -- T-WHILE
 chkCmd env (A.CmdWhile {A.cwCond = e, A.cwBody = c, A.cmdSrcPos = sp}) = do
     e' <- chkTpExp env e Boolean                        -- env |- e : Boolean
@@ -121,7 +122,12 @@ chkCmd env (A.CmdLet {A.clDecls = ds, A.clBody = c, A.cmdSrcPos = sp}) = do
                        chkDeclarations (openMinScope env) env' ds 
     c'          <- chkCmd env' c                        -- env' |- c
     return (CmdLet {clDecls = ds', clBody = c', cmdSrcPos = sp})
-
+    
+chkIfCmd :: Env -> (A.Expression, A.Command) -> D (Expression, Command)
+chkIfCmd env (e,c) = do
+    e' <- chkTpExp env e Boolean
+    c' <- chkCmd env c
+    return (e', c')
 
 -- Check that declarations/definitions are well-typed in given environment
 -- and environmant for function/procedure bodies and compute extended
@@ -337,6 +343,11 @@ infTpExp env e@(A.ExpLitInt {A.eliVal = n, A.expSrcPos = sp}) = do
     n' <- toMTInt n sp
     return (Integer,                            -- env |- n : Integer
             ExpLitInt {eliVal = n', expType = Integer, expSrcPos = sp})
+-- T-LITCHR
+infTpExp env e@(A.ExpLitChr {A.elcVal = c, A.expSrcPos = sp}) = do
+    c' <- toMTChr c sp
+    return (Character,                            -- env |- n : Integer
+            ExpLitChr {elcVal = c', expType = Character, expSrcPos = sp})
 -- T-VAR
 infTpExp env (A.ExpVar {A.evVar = x, A.expSrcPos = sp}) = do
     tms <- lookupName env x sp          -- env(x) = t, sources(t,t)
@@ -415,7 +426,7 @@ infTpExp env (A.ExpCond {A.ecCond = e1, A.ecTrue = e2, A.ecFalse = e3, A.expSrcP
         return (t1, ExpCond {ecCond = e1', ecTrue = e2', ecFalse = e3', expType = t1, expSrcPos = sp})
     else do
         emitErrD sp ("Two type should be the same")
-        return (t1, ExpCond {ecCond = e1', ecTrue = e2', ecFalse = e3', expType = t1, expSrcPos = sp})
+        return (SomeType, ExpCond {ecCond = e1', ecTrue = e2', ecFalse = e3', expType = SomeType, expSrcPos = sp})
 -- Check that expression is well-typed in the given environment and
 -- infer its type assuming it should be an non-reference type:
 --

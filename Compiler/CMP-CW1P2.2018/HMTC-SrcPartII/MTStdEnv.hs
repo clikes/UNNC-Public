@@ -87,4 +87,6 @@ mtStdEnv =
          ("!",       Arr [Boolean] Boolean,          ESVLbl "not"),
          ("getint",  Arr [Snk Integer] Void,         ESVLbl "getint"), 
          ("putint",  Arr [Integer] Void,             ESVLbl "putint"),
+         ("getchr",  Arr [Snk Character] Void,       ESVLbl "getchr"), 
+         ("putchr",  Arr [Character] Void,           ESVLbl "putchr"),
          ("skip",    Arr [] Void,                    ESVLbl "skip")]

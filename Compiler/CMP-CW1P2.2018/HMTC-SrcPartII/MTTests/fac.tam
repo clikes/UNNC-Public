@@ -1,0 +1,31 @@
+        LOADL       0                   
+        LOADL       8                   
+        LOADA       [SB + 0]            
+        CALL        #0_fac              
+        LOAD        [SB + 0]            
+        CALL        putint              
+        POP         0 1                 
+        HALT                            
+#0_fac:
+        LOAD        [LB - 2]            
+        LOADL       1                   
+        GTR                             
+        JUMPIFNZ    #2                  
+        LOADL       1                   
+        LOAD        [LB - 1]            
+        STOREI      0                   
+        JUMP        #1                  
+#2:
+        LOAD        [LB - 2]            
+        LOADL       1                   
+        SUB                             
+        LOAD        [LB - 1]            
+        CALL        #0_fac              
+        LOAD        [LB - 2]            
+        LOAD        [LB - 1]            
+        LOADI       0                   
+        MUL                             
+        LOAD        [LB - 1]            
+        STOREI      0                   
+#1:
+        RETURN      0 2                 

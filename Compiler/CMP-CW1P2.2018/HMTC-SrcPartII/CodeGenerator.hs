@@ -149,15 +149,11 @@ execute majl env n (CmdCall {ccProc = p, ccArgs = as}) = do
     evaluate majl env p
     emit CALLI
 execute majl env n (CmdSeq {csCmds = cs}) = executeSeq majl env n cs
-execute majl env n (CmdIf {ciCond = e, ciThen = c1, ciElse = c2}) = do
-    lblElse <- newName
+execute majl env n (CmdIf {ciCondThens = ecs, ciMbElse = c1}) = do
     lblOver <- newName
-    evaluate majl env e
-    emit (JUMPIFZ lblElse)
-    execute majl env n c1
-    emit (JUMP lblOver)
-    emit (Label lblElse)
-    execute majl env n c2
+    executeIfSeq majl env n ecs lblOver
+    case c1 of
+        Just ec -> execute majl env n ec
     emit (Label lblOver)
 execute majl env n (CmdWhile {cwCond = e, cwBody = c}) = do
     lblLoop <- newName
@@ -168,10 +164,29 @@ execute majl env n (CmdWhile {cwCond = e, cwBody = c}) = do
     emit (Label lblCond)
     evaluate majl env e
     emit (JUMPIFNZ lblLoop)
+execute majl env n (CmdRepeat {crBody = c, crCond = e}) = do
+    lblCond <- newName
+    lblRepeat <- newName
+    emit (Label lblRepeat)
+    execute majl env n c
+    emit (Label lblCond)
+    evaluate majl env e
+    emit (JUMPIFNZ lblRepeat)
 execute majl env n (CmdLet {clDecls = ds, clBody = c}) = do
     (env', n') <- elaborateDecls majl env n ds
     execute majl env' n' c
     emit (POP 0 (n' - n))
+
+--executeIfSeq :: MSL -> CGEnv -> MTInt -> [Command] -> TAMCG ()
+executeIfSeq majl env n [] over    = return ()
+executeIfSeq majl env n ((e,c):cs) over = do
+    lblCond <- newName
+    evaluate majl env e 
+    emit (JUMPIFZ lblCond)
+    execute majl env n c
+    emit (JUMP over)
+    emit (Label lblCond)
+    executeIfSeq majl env n cs over
 
 
 -- Generate code to execute a sequence of commands.
@@ -382,7 +397,16 @@ evaluate majl env (ExpPrj {epRcd = r, epFld = f, expType = t}) = do
     evaluate majl env r
     emit (LOADL (fldOffset f tr))
     emit ADD
-
+evaluate majl env (ExpCond {ecCond = c, ecTrue = ct, ecFalse = cf, expType = t}) = do
+    lblElse <- newName
+    lblOver <- newName
+    evaluate majl env c
+    emit (JUMPIFZ lblElse)
+    evaluate majl env ct
+    emit (JUMP lblOver)
+    emit (Label lblElse)
+    evaluate majl env cf 
+    emit (Label lblOver)
 
 ------------------------------------------------------------------------------
 -- Code generation for variable access and computation of static links
@@ -483,6 +507,7 @@ sizeOf SomeType  = cgErr "sizeOf" sizeOfErrMsgSomeType
 sizeOf Void      = 0
 sizeOf Boolean   = 1
 sizeOf Integer   = 1
+sizeOf Character = 1
 -- sizeOf Character = 1
 sizeOf (Src _)   = 1
 sizeOf (Snk _)   = 1

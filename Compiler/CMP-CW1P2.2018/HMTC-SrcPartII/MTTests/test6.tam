@@ -1,0 +1,40 @@
+        LOADL       120                 
+        LOADL       0                   
+        LOADA       [SB + 1]            
+        CALL        getint              
+#5:
+        LOAD        [SB + 1]            
+        CALL        #0_odd              
+        JUMPIFZ     #6                  
+        LOAD        [SB + 1]            
+        LOADL       3                   
+        MUL                             
+        LOADL       1                   
+        ADD                             
+        JUMP        #7                  
+#6:
+        LOAD        [SB + 1]            
+        LOADL       2                   
+        DIV                             
+#7:
+        STORE       [SB + 1]            
+        LOAD        [SB + 1]            
+        CALL        putint              
+        LOAD        [SB + 1]            
+        LOADL       1                   
+        EQL                             
+        JUMPIFNZ    #5                  
+        LOAD        [SB + 0]            
+        CALL        putchr              
+        POP         0 2                 
+        HALT                            
+#0_odd:
+        LOAD        [LB - 1]            
+        LOADL       2                   
+        DIV                             
+        LOADL       2                   
+        MUL                             
+        LOAD        [LB - 1]            
+        EQL                             
+        NOT                             
+        RETURN      1 1                 

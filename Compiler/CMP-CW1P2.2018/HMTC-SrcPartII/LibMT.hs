@@ -162,6 +162,19 @@ libMT = [
     PUTINT,
     RETURN 0 1,
 
+-- getchr
+    Label "getchr",
+    GETCHR,
+    LOAD (LB (-1)),
+    STOREI 0,
+    RETURN 0 1,
+
+-- putchr
+    Label "putchr",
+    LOAD (LB (-1)),
+    PUTCHR,
+    RETURN 0 1,
+
 -- skip
     Label "skip",
     RETURN 0 0,

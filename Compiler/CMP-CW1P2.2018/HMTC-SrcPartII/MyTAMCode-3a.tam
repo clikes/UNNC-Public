@@ -1,0 +1,20 @@
+        LOADL       1
+        GETINT
+#loop:
+        LOADL       0
+        LOAD        [SB + 1]
+        LSS
+        JUMPIFZ     #halt
+        LOAD        [SB + 0]
+        PUTINT
+        LOAD        [SB + 0]
+        LOADL       1
+        ADD
+        STORE       [SB + 0]
+        LOAD        [SB + 1] 
+        LOADL       1
+        SUB
+        STORE       [SB + 1]
+        JUMP        #loop
+#halt:     
+        HALT

@@ -1,0 +1,14 @@
+        LOADL       0                   
+        LOADL       9                   
+        LOADL       1                   
+        LOADL       2                   
+        LOAD        [SB + 1]            
+        LOADL       1                   
+        ADD                             
+        MUL                             
+        ADD                             
+        STORE       [SB + 0]            
+        LOAD        [SB + 0]            
+        CALL        putint              
+        POP         0 2                 
+        HALT                            

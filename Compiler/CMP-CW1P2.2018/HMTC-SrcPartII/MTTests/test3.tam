@@ -1,0 +1,38 @@
+        LOADL       0                   
+        LOADL       2                   
+        LOADL       0                   
+        LOADL       1                   
+        LOADA       [SB + 2]            
+        CALL        #0_p                
+        LOAD        [SB + 2]            
+        CALL        putint              
+        POP         0 3                 
+        HALT                            
+#1_f:
+        LOAD        [LB - 2]            
+        LOAD        [LB - 2]            
+        MUL                             
+        LOAD        [LB - 1]            
+        LOAD        [LB - 1]            
+        MUL                             
+        ADD                             
+        RETURN      1 2                 
+#0_p:
+        LOAD        [LB - 2]            
+        LOADL       1000                
+        LSS                             
+        JUMPIFZ     #3                  
+        LOAD        [LB - 2]            
+        CALL        putint              
+        LOAD        [LB - 2]            
+        LOAD        [SB + 1]            
+        CALL        #1_f                
+        LOAD        [LB - 1]            
+        CALL        #0_p                
+        JUMP        #2                  
+#3:
+        LOAD        [LB - 2]            
+        LOAD        [LB - 1]            
+        STOREI      0                   
+#2:
+        RETURN      0 2                 

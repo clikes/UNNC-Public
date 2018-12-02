@@ -1,0 +1,264 @@
+        LOADL       1                   
+        LOADL       2                   
+        LOADL       3                   
+        LOADL       4                   
+        LOADL       5                   
+        LOADL       6                   
+        LOADLB      0 38                
+        LOADL       1                   
+        LOADL       2                   
+        LOADL       3                   
+        LOADL       4                   
+        LOADL       5                   
+        LOADL       6                   
+        LOADL       7                   
+        LOADL       8                   
+        LOADA       [SB + 8]            
+        CALL        #0_matmult          
+        LOADL       0                   
+        STORE       [SB + 6]            
+        JUMP        #20                 
+#19:
+        LOADA       [SB + 8]            
+        LOAD        [SB + 6]            
+        LOAD        [ST - 1]            
+        LOADL       0                   
+        LSS                             
+        JUMPIFNZ    #21                 
+        LOAD        [ST - 1]            
+        LOADL       4                   
+        LSS                             
+        JUMPIFNZ    #22                 
+#21:
+        CALL        ixerror             
+#22:
+        LOADL       3                   
+        MUL                             
+        ADD                             
+        LOADIB      3                   
+        LOADA       [SB + 20]           
+        LOAD        [SB + 6]            
+        LOAD        [ST - 1]            
+        LOADL       0                   
+        LSS                             
+        JUMPIFNZ    #23                 
+        LOAD        [ST - 1]            
+        LOADL       4                   
+        LSS                             
+        JUMPIFNZ    #24                 
+#23:
+        CALL        ixerror             
+#24:
+        LOADL       3                   
+        MUL                             
+        ADD                             
+        STOREIB     3                   
+        LOAD        [SB + 6]            
+        LOADL       1                   
+        ADD                             
+        STORE       [SB + 6]            
+#20:
+        LOAD        [SB + 6]            
+        LOADL       4                   
+        LSS                             
+        JUMPIFNZ    #19                 
+        LOADA       [SB + 20]           
+        LOADIB      12                  
+        LOADA       [SB + 32]           
+        STOREIB     12                  
+        LOADL       0                   
+        STORE       [SB + 6]            
+        JUMP        #26                 
+#25:
+        LOADL       0                   
+        STORE       [SB + 7]            
+        JUMP        #28                 
+#27:
+        LOADA       [SB + 32]           
+        LOAD        [SB + 6]            
+        LOAD        [ST - 1]            
+        LOADL       0                   
+        LSS                             
+        JUMPIFNZ    #31                 
+        LOAD        [ST - 1]            
+        LOADL       4                   
+        LSS                             
+        JUMPIFNZ    #32                 
+#31:
+        CALL        ixerror             
+#32:
+        LOADL       3                   
+        MUL                             
+        ADD                             
+        LOAD        [SB + 7]            
+        LOAD        [ST - 1]            
+        LOADL       0                   
+        LSS                             
+        JUMPIFNZ    #29                 
+        LOAD        [ST - 1]            
+        LOADL       3                   
+        LSS                             
+        JUMPIFNZ    #30                 
+#29:
+        CALL        ixerror             
+#30:
+        ADD                             
+        LOADI       0                   
+        CALL        putint              
+        LOAD        [SB + 7]            
+        LOADL       1                   
+        ADD                             
+        STORE       [SB + 7]            
+#28:
+        LOAD        [SB + 7]            
+        LOADL       3                   
+        LSS                             
+        JUMPIFNZ    #27                 
+        LOAD        [SB + 6]            
+        LOADL       1                   
+        ADD                             
+        STORE       [SB + 6]            
+#26:
+        LOAD        [SB + 6]            
+        LOADL       4                   
+        LSS                             
+        JUMPIFNZ    #25                 
+        POP         0 44                
+        HALT                            
+#0_matmult:
+        LOADLB      0 3                 
+        STORE       [LB + 3]            
+        JUMP        #2                  
+#1:
+        LOADL       0                   
+        STORE       [LB + 4]            
+        JUMP        #4                  
+#3:
+        LOADLB      0 2                 
+        JUMP        #6                  
+#5:
+        LOAD        [LB + 5]            
+        LOADA       [LB - 9]            
+        LOAD        [LB + 3]            
+        LOAD        [ST - 1]            
+        LOADL       0                   
+        LSS                             
+        JUMPIFNZ    #9                  
+        LOAD        [ST - 1]            
+        LOADL       4                   
+        LSS                             
+        JUMPIFNZ    #10                 
+#9:
+        CALL        ixerror             
+#10:
+        LOADL       2                   
+        MUL                             
+        ADD                             
+        LOAD        [LB + 6]            
+        LOAD        [ST - 1]            
+        LOADL       0                   
+        LSS                             
+        JUMPIFNZ    #7                  
+        LOAD        [ST - 1]            
+        LOADL       2                   
+        LSS                             
+        JUMPIFNZ    #8                  
+#7:
+        CALL        ixerror             
+#8:
+        ADD                             
+        LOADI       0                   
+        LOADA       [SB + 0]            
+        LOAD        [LB + 6]            
+        LOAD        [ST - 1]            
+        LOADL       0                   
+        LSS                             
+        JUMPIFNZ    #13                 
+        LOAD        [ST - 1]            
+        LOADL       2                   
+        LSS                             
+        JUMPIFNZ    #14                 
+#13:
+        CALL        ixerror             
+#14:
+        LOADL       3                   
+        MUL                             
+        ADD                             
+        LOAD        [LB + 4]            
+        LOAD        [ST - 1]            
+        LOADL       0                   
+        LSS                             
+        JUMPIFNZ    #11                 
+        LOAD        [ST - 1]            
+        LOADL       3                   
+        LSS                             
+        JUMPIFNZ    #12                 
+#11:
+        CALL        ixerror             
+#12:
+        ADD                             
+        LOADI       0                   
+        MUL                             
+        ADD                             
+        STORE       [LB + 5]            
+        LOAD        [LB + 6]            
+        LOADL       1                   
+        ADD                             
+        STORE       [LB + 6]            
+#6:
+        LOAD        [LB + 6]            
+        LOADL       2                   
+        LSS                             
+        JUMPIFNZ    #5                  
+        LOAD        [LB + 5]            
+        LOAD        [LB - 1]            
+        LOAD        [LB + 3]            
+        LOAD        [ST - 1]            
+        LOADL       0                   
+        LSS                             
+        JUMPIFNZ    #17                 
+        LOAD        [ST - 1]            
+        LOADL       4                   
+        LSS                             
+        JUMPIFNZ    #18                 
+#17:
+        CALL        ixerror             
+#18:
+        LOADL       3                   
+        MUL                             
+        ADD                             
+        LOAD        [LB + 4]            
+        LOAD        [ST - 1]            
+        LOADL       0                   
+        LSS                             
+        JUMPIFNZ    #15                 
+        LOAD        [ST - 1]            
+        LOADL       3                   
+        LSS                             
+        JUMPIFNZ    #16                 
+#15:
+        CALL        ixerror             
+#16:
+        ADD                             
+        STOREI      0                   
+        POP         0 2                 
+        LOAD        [LB + 4]            
+        LOADL       1                   
+        ADD                             
+        STORE       [LB + 4]            
+#4:
+        LOAD        [LB + 4]            
+        LOADL       3                   
+        LSS                             
+        JUMPIFNZ    #3                  
+        LOAD        [LB + 3]            
+        LOADL       1                   
+        ADD                             
+        STORE       [LB + 3]            
+#2:
+        LOAD        [LB + 3]            
+        LOADL       4                   
+        LSS                             
+        JUMPIFNZ    #1                  
+        POP         0 2                 
+        RETURN      0 9                 
