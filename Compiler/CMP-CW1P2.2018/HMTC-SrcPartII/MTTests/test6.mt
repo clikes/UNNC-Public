@@ -11,13 +11,34 @@ in begin
         putint(2)
     else
         getint(n);
+
+    if false then
+        putint(1)
+    elsif false then
+        putint(2);
+
+    if false then
+        putint(1)
+    else
+        getchr(c);
+
+    if false then
+        putint(1)
+    elsif false then
+        putint(2)
+	elsif true then
+        putint(2)
+    else
+        getint(n);
+
     repeat
         begin
             n := odd(n) ? n * 3 + 1 : n / 2;
             putint(n)
         end
     until n == 1;
-    putchr(c)
+    putchr(c);
+    putchr('\n')
 end
 
     

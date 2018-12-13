@@ -153,8 +153,11 @@ execute majl env n (CmdIf {ciCondThens = ecs, ciMbElse = c1}) = do
     lblOver <- newName
     executeIfSeq majl env n ecs lblOver
     case c1 of
-        Just ec -> execute majl env n ec
-    emit (Label lblOver)
+        Just ec -> do 
+            execute majl env n ec
+            emit (Label lblOver)
+        Nothing -> emit (Label lblOver)
+    
 execute majl env n (CmdWhile {cwCond = e, cwBody = c}) = do
     lblLoop <- newName
     lblCond <- newName
@@ -171,13 +174,13 @@ execute majl env n (CmdRepeat {crBody = c, crCond = e}) = do
     execute majl env n c
     emit (Label lblCond)
     evaluate majl env e
-    emit (JUMPIFNZ lblRepeat)
+    emit (JUMPIFZ lblRepeat)
 execute majl env n (CmdLet {clDecls = ds, clBody = c}) = do
     (env', n') <- elaborateDecls majl env n ds
     execute majl env' n' c
     emit (POP 0 (n' - n))
 
---executeIfSeq :: MSL -> CGEnv -> MTInt -> [Command] -> TAMCG ()
+executeIfSeq :: MSL -> CGEnv -> MTInt -> [(Expression, Command)] -> Name -> TAMCG ()
 executeIfSeq majl env n [] over    = return ()
 executeIfSeq majl env n ((e,c):cs) over = do
     lblCond <- newName

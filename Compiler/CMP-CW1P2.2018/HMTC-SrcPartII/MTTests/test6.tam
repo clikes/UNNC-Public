@@ -2,29 +2,35 @@
         LOADL       0                   
         LOADA       [SB + 1]            
         CALL        getint              
-#5:
+        LOADA       [SB + 0]            
+        CALL        getchr              
+        LOADL       2                   
+        CALL        putint              
+#14:
         LOAD        [SB + 1]            
         CALL        #0_odd              
-        JUMPIFZ     #6                  
+        JUMPIFZ     #15                 
         LOAD        [SB + 1]            
         LOADL       3                   
         MUL                             
         LOADL       1                   
         ADD                             
-        JUMP        #7                  
-#6:
+        JUMP        #16                 
+#15:
         LOAD        [SB + 1]            
         LOADL       2                   
         DIV                             
-#7:
+#16:
         STORE       [SB + 1]            
         LOAD        [SB + 1]            
         CALL        putint              
         LOAD        [SB + 1]            
         LOADL       1                   
         EQL                             
-        JUMPIFNZ    #5                  
+        JUMPIFZ     #14                 
         LOAD        [SB + 0]            
+        CALL        putchr              
+        LOADL       10                  
         CALL        putchr              
         POP         0 2                 
         HALT                            

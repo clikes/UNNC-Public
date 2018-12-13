@@ -1,0 +1,8 @@
+        LOADL 1
+        CALL #fac
+        PUTCHR
+#fac:
+        GETCHR
+        LOAD [LB - 1]
+        STOREI 0
+        RETURN 0 1
