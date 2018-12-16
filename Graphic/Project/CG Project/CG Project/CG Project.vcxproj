@@ -163,17 +163,24 @@
   <ItemGroup>
     <ClInclude Include="baseheader.h" />
     <ClInclude Include="Draw.h" />
+    <ClInclude Include="Lasor.h" />
+    <ClInclude Include="lib\tiny_obj_loader.h" />
     <ClInclude Include="math.h" />
+    <ClInclude Include="Model.h" />
     <ClInclude Include="ParticleController.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Planet.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="SpaceShip.h" />
     <ClInclude Include="Texture.h" />
+    <ClInclude Include="UFO.h" />
+    <ClInclude Include="UI.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Draw.cpp" />
+    <ClCompile Include="Lasor.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Model.cpp" />
     <ClCompile Include="ParticleController.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -184,6 +191,8 @@
     <ClCompile Include="Planet.cpp" />
     <ClCompile Include="SpaceShip.cpp" />
     <ClCompile Include="Texture.cpp" />
+    <ClCompile Include="UFO.cpp" />
+    <ClCompile Include="UI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

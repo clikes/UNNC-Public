@@ -22,6 +22,27 @@ inline vec3 Cross(vec3 v1, vec3 v2) {
 	float z = v1.x * v2.y - v1.y * v2.x;
 	return vec3(x, y, z);
 }
+
+
+
+inline vec3 randvec(int range) {
+	int x, y, z;
+	x = rand() % (range * 2) - range;
+	y = rand() % (range * 2) - range;
+	z = rand() % (range * 2) - range;
+	return vec3(x, y, z);
+}
+
+inline float Distance(vec3 v1, vec3 v2) {
+	float result = sqrtf(pow((v1.x - v2.x), 2) + pow((v1.y - v2.y), 2) + pow((v1.z - v2.z), 2));
+	
+	return result;
+}
+
+inline void glTranslateVec(vec3 pos) {
+	glTranslatef(pos.x, pos.y, pos.z);
+}
+
 #define PI 3.14159265358979323846f
 #define deg2rad (PI / 180.0f)
 #endif // !1

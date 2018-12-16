@@ -4,16 +4,21 @@
 
 SpaceShip::SpaceShip()
 {
-	pos = vec3(0, 0, 1000);
-	lookAt = vec3(0, 0, 999);
+	pos = vec3(0, 0, 18000);
+	lookAt = vec3(0, 0, 17999);
 	up = vec3(0, 1, 0);
 	pitch = 0.0f;
 	yaw = 0.0f;
 }
 
-void SpaceShip::update()
+void SpaceShip::update(float force)
 {
-
+	vec3 buffer;
+	buffer = forward();
+	buffer *= force;
+	pos += buffer;
+	lookAt += buffer;
+	glutPostRedisplay();
 }
 
 void SpaceShip::RotateShip(float x, float y)

@@ -1,5 +1,9 @@
 ﻿  main.cpp
-h:\unnc-public\graphic\project\cg project\cg project\main.cpp(54): warning C4244: “参数”: 从“int”转换到“float”，可能丢失数据
-h:\unnc-public\graphic\project\cg project\cg project\main.cpp(69): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
-h:\unnc-public\graphic\project\cg project\cg project\main.cpp(327): warning C4244: “参数”: 从“int”转换到“float”，可能丢失数据
+h:\unnc-public\graphic\project\cg project\cg project\model.h(27): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
+h:\unnc-public\graphic\project\cg project\cg project\model.h(28): warning C4477: “printf”: 格式字符串“%d”需要类型“int”的参数，但可变参数 1 拥有了类型“unsigned __int64”
+  h:\unnc-public\graphic\project\cg project\cg project\model.h(28): note: 请考虑在格式字符串中使用“%zd”
+h:\unnc-public\graphic\project\cg project\cg project\model.h(51): warning C4267: “+=”: 从“size_t”转换到“int”，可能丢失数据
+h:\unnc-public\graphic\project\cg project\cg project\main.cpp(82): warning C4244: “参数”: 从“int”转换到“float”，可能丢失数据
+h:\unnc-public\graphic\project\cg project\cg project\main.cpp(97): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
+h:\unnc-public\graphic\project\cg project\cg project\main.cpp(696): warning C4244: “参数”: 从“int”转换到“float”，可能丢失数据
   CG Project.vcxproj -> H:\UNNC-Public\Graphic\Project\CG Project\x64\Debug\CG Project.exe

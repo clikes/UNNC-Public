@@ -13,9 +13,9 @@ public:
 
 public:
 	SpaceShip();
+	void update(float force);
 	vec3 forward();
 	vec3 right();
-	void update();
 	void RotateShip(float x, float y);
 	~SpaceShip();
 };

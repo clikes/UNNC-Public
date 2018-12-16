@@ -1,6 +1,8 @@
 #include "Draw.h"
-#include "Texture.h"
+
+
 GLUquadricObj * quad;
+
 void InitDraw()
 {
 	quad = gluNewQuadric();
@@ -141,5 +143,50 @@ void DrawCircle(float radius, int pointCount)
 		glTexCoord2f(0.5f *cos(2 * PI / pointCount * i) + 0.5f, 0.5f *sin(2 * PI / pointCount * i) + 0.5f);
 		glVertex3f(radius*cos(2 * PI / pointCount * i), 0, radius*sin(2 * PI / pointCount * i));
 	}
+	glEnd();
+}
+
+void DrawLasor() {
+
+
+	glPushMatrix();
+	glBegin(GL_QUADS);
+	glTexCoord2f(0, 0);
+	glVertex3f(-LASOR_WEIGHT, 0, 0);
+	glTexCoord2f(1, 0);
+	glVertex3f(LASOR_WEIGHT, 0, 0);
+	glTexCoord2f(1, 1);
+	glVertex3f(LASOR_WEIGHT, LASOR_LONG, 0);
+	glTexCoord2f(0, 1);
+	glVertex3f(-LASOR_WEIGHT, LASOR_LONG, 0);
+	glTexCoord2f(0, 0);
+	glVertex3f(0, 0, -LASOR_WEIGHT);
+	glTexCoord2f(1, 0);
+	glVertex3f(0, 0, LASOR_WEIGHT);
+	glTexCoord2f(1, 1);
+	glVertex3f(0, LASOR_LONG, LASOR_WEIGHT);
+	glTexCoord2f(0, 1);
+	glVertex3f(0, LASOR_LONG, -LASOR_WEIGHT);
+	glEnd();
+	glPopMatrix();
+}
+
+
+
+void DrawUI(int width, int height) {
+	glBegin(GL_QUADS);
+
+	glTexCoord2f(0.0f,0.0f);
+	glVertex2d(0, 0);
+
+	glTexCoord2f(0.0f, 1.0f);
+	glVertex2d(0, height);
+	glTexCoord2f(1.0f, 1.0f);
+
+	glVertex2d(width, height);
+
+	glTexCoord2f(1.0f, 0.0f);
+	glVertex2d(width, 0);
+
 	glEnd();
 }

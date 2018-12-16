@@ -42,6 +42,21 @@
     <ClInclude Include="ParticleController.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="lib\tiny_obj_loader.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Model.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="UFO.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Lasor.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="UI.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -63,6 +78,18 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="ParticleController.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Model.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="UFO.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Lasor.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="UI.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

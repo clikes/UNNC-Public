@@ -8,7 +8,10 @@ struct Particle
 	bool active;//active or not
 	long life;//last time in millsecond 
 	vec3 pos;//position relative to the controller's position
+	vec3 bornpos;//position relative to the controller's position
 	vec3 rotate;
+	float velocity;
+	vec3 toward;
 	vec3 fatherPos;//particle's controller's pos
 };
 
@@ -24,8 +27,11 @@ public:
 	size_t radius;
 	size_t count;
 	Particle *particles;
+	bool active;
+	bool hasActive;
 public:
 	ParticleController(size_t count, Texture* tex, vec3 pos, vec3 toward, float velocity, float scale, long fadetime, size_t radius);
+	ParticleController(size_t count, Texture * tex, vec3 pos, float velocity, float scale, long fadetime, size_t radius);
 	void respawn(Particle particle);
 	void update();
 	void DrawParticle(int id);

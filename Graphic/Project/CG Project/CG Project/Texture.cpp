@@ -79,6 +79,7 @@ GLuint Texture::loadTextureAlpha(const char * filename)
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0,
 		GL_BGRA_EXT, GL_UNSIGNED_BYTE, pixels);
 	//glBindTexture(GL_TEXTURE_2D, lastTextureID);
+	uipixels = pixels;
 	free(pixels);
 	return textureID;
 }
@@ -95,4 +96,5 @@ void SetupRC()
 }
 Texture::~Texture()
 {
+
 }
