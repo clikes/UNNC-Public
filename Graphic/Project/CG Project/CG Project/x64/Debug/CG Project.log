@@ -1,9 +1,103 @@
-﻿  main.cpp
+﻿  Draw.cpp
+h:\unnc-public\graphic\project\cg project\cg project\draw.cpp(16): warning C4244: “参数”: 从“int”转换到“GLfloat”，可能丢失数据
+h:\unnc-public\graphic\project\cg project\cg project\draw.cpp(35): warning C4244: “初始化”: 从“float”转换到“int”，可能丢失数据
+h:\unnc-public\graphic\project\cg project\cg project\draw.cpp(36): warning C4244: “初始化”: 从“float”转换到“int”，可能丢失数据
+h:\unnc-public\graphic\project\cg project\cg project\draw.cpp(37): warning C4244: “初始化”: 从“float”转换到“int”，可能丢失数据
+h:\unnc-public\graphic\project\cg project\cg project\draw.cpp(42): warning C4244: “参数”: 从“int”转换到“GLfloat”，可能丢失数据
+h:\unnc-public\graphic\project\cg project\cg project\draw.cpp(45): warning C4244: “参数”: 从“int”转换到“GLfloat”，可能丢失数据
+h:\unnc-public\graphic\project\cg project\cg project\draw.cpp(48): warning C4244: “参数”: 从“int”转换到“GLfloat”，可能丢失数据
+h:\unnc-public\graphic\project\cg project\cg project\draw.cpp(51): warning C4244: “参数”: 从“int”转换到“GLfloat”，可能丢失数据
+h:\unnc-public\graphic\project\cg project\cg project\draw.cpp(58): warning C4244: “参数”: 从“int”转换到“GLfloat”，可能丢失数据
+h:\unnc-public\graphic\project\cg project\cg project\draw.cpp(61): warning C4244: “参数”: 从“int”转换到“GLfloat”，可能丢失数据
+h:\unnc-public\graphic\project\cg project\cg project\draw.cpp(64): warning C4244: “参数”: 从“int”转换到“GLfloat”，可能丢失数据
+h:\unnc-public\graphic\project\cg project\cg project\draw.cpp(67): warning C4244: “参数”: 从“int”转换到“GLfloat”，可能丢失数据
+h:\unnc-public\graphic\project\cg project\cg project\draw.cpp(75): warning C4244: “参数”: 从“int”转换到“GLfloat”，可能丢失数据
+h:\unnc-public\graphic\project\cg project\cg project\draw.cpp(78): warning C4244: “参数”: 从“int”转换到“GLfloat”，可能丢失数据
+h:\unnc-public\graphic\project\cg project\cg project\draw.cpp(82): warning C4244: “参数”: 从“int”转换到“GLfloat”，可能丢失数据
+h:\unnc-public\graphic\project\cg project\cg project\draw.cpp(85): warning C4244: “参数”: 从“int”转换到“GLfloat”，可能丢失数据
+h:\unnc-public\graphic\project\cg project\cg project\draw.cpp(92): warning C4244: “参数”: 从“int”转换到“GLfloat”，可能丢失数据
+h:\unnc-public\graphic\project\cg project\cg project\draw.cpp(95): warning C4244: “参数”: 从“int”转换到“GLfloat”，可能丢失数据
+h:\unnc-public\graphic\project\cg project\cg project\draw.cpp(98): warning C4244: “参数”: 从“int”转换到“GLfloat”，可能丢失数据
+h:\unnc-public\graphic\project\cg project\cg project\draw.cpp(101): warning C4244: “参数”: 从“int”转换到“GLfloat”，可能丢失数据
+h:\unnc-public\graphic\project\cg project\cg project\draw.cpp(108): warning C4244: “参数”: 从“int”转换到“GLfloat”，可能丢失数据
+h:\unnc-public\graphic\project\cg project\cg project\draw.cpp(111): warning C4244: “参数”: 从“int”转换到“GLfloat”，可能丢失数据
+h:\unnc-public\graphic\project\cg project\cg project\draw.cpp(114): warning C4244: “参数”: 从“int”转换到“GLfloat”，可能丢失数据
+h:\unnc-public\graphic\project\cg project\cg project\draw.cpp(117): warning C4244: “参数”: 从“int”转换到“GLfloat”，可能丢失数据
+h:\unnc-public\graphic\project\cg project\cg project\draw.cpp(124): warning C4244: “参数”: 从“int”转换到“GLfloat”，可能丢失数据
+h:\unnc-public\graphic\project\cg project\cg project\draw.cpp(127): warning C4244: “参数”: 从“int”转换到“GLfloat”，可能丢失数据
+h:\unnc-public\graphic\project\cg project\cg project\draw.cpp(130): warning C4244: “参数”: 从“int”转换到“GLfloat”，可能丢失数据
+h:\unnc-public\graphic\project\cg project\cg project\draw.cpp(133): warning C4244: “参数”: 从“int”转换到“GLfloat”，可能丢失数据
+  Lasor.cpp
+  main.cpp
 h:\unnc-public\graphic\project\cg project\cg project\model.h(27): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
 h:\unnc-public\graphic\project\cg project\cg project\model.h(28): warning C4477: “printf”: 格式字符串“%d”需要类型“int”的参数，但可变参数 1 拥有了类型“unsigned __int64”
   h:\unnc-public\graphic\project\cg project\cg project\model.h(28): note: 请考虑在格式字符串中使用“%zd”
 h:\unnc-public\graphic\project\cg project\cg project\model.h(51): warning C4267: “+=”: 从“size_t”转换到“int”，可能丢失数据
 h:\unnc-public\graphic\project\cg project\cg project\main.cpp(82): warning C4244: “参数”: 从“int”转换到“float”，可能丢失数据
 h:\unnc-public\graphic\project\cg project\cg project\main.cpp(97): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
-h:\unnc-public\graphic\project\cg project\cg project\main.cpp(696): warning C4244: “参数”: 从“int”转换到“float”，可能丢失数据
+h:\unnc-public\graphic\project\cg project\cg project\main.cpp(642): warning C4244: “参数”: 从“int”转换到“float”，可能丢失数据
+  ParticleController.cpp
+h:\unnc-public\graphic\project\cg project\cg project\particlecontroller.cpp(32): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
+h:\unnc-public\graphic\project\cg project\cg project\particlecontroller.cpp(33): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
+h:\unnc-public\graphic\project\cg project\cg project\particlecontroller.cpp(34): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
+h:\unnc-public\graphic\project\cg project\cg project\particlecontroller.cpp(37): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
+h:\unnc-public\graphic\project\cg project\cg project\particlecontroller.cpp(40): warning C4244: “=”: 从“int”转换到“T”，可能丢失数据
+          with
+          [
+              T=float
+          ]
+h:\unnc-public\graphic\project\cg project\cg project\particlecontroller.cpp(41): warning C4244: “=”: 从“int”转换到“T”，可能丢失数据
+          with
+          [
+              T=float
+          ]
+h:\unnc-public\graphic\project\cg project\cg project\particlecontroller.cpp(42): warning C4244: “=”: 从“int”转换到“T”，可能丢失数据
+          with
+          [
+              T=float
+          ]
+h:\unnc-public\graphic\project\cg project\cg project\particlecontroller.cpp(43): warning C4244: “=”: 从“int”转换到“T”，可能丢失数据
+          with
+          [
+              T=float
+          ]
+h:\unnc-public\graphic\project\cg project\cg project\particlecontroller.cpp(44): warning C4244: “=”: 从“int”转换到“T”，可能丢失数据
+          with
+          [
+              T=float
+          ]
+h:\unnc-public\graphic\project\cg project\cg project\particlecontroller.cpp(45): warning C4244: “=”: 从“int”转换到“T”，可能丢失数据
+          with
+          [
+              T=float
+          ]
+h:\unnc-public\graphic\project\cg project\cg project\particlecontroller.cpp(70): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+h:\unnc-public\graphic\project\cg project\cg project\particlecontroller.cpp(71): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+h:\unnc-public\graphic\project\cg project\cg project\particlecontroller.cpp(72): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+h:\unnc-public\graphic\project\cg project\cg project\particlecontroller.cpp(77): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
+h:\unnc-public\graphic\project\cg project\cg project\particlecontroller.cpp(80): warning C4244: “=”: 从“int”转换到“T”，可能丢失数据
+          with
+          [
+              T=float
+          ]
+h:\unnc-public\graphic\project\cg project\cg project\particlecontroller.cpp(81): warning C4244: “=”: 从“int”转换到“T”，可能丢失数据
+          with
+          [
+              T=float
+          ]
+h:\unnc-public\graphic\project\cg project\cg project\particlecontroller.cpp(82): warning C4244: “=”: 从“int”转换到“T”，可能丢失数据
+          with
+          [
+              T=float
+          ]
+h:\unnc-public\graphic\project\cg project\cg project\particlecontroller.cpp(66): warning C4101: “z”: 未引用的局部变量
+h:\unnc-public\graphic\project\cg project\cg project\particlecontroller.cpp(66): warning C4101: “y”: 未引用的局部变量
+h:\unnc-public\graphic\project\cg project\cg project\particlecontroller.cpp(66): warning C4101: “x”: 未引用的局部变量
+  Planet.cpp
+  SpaceShip.cpp
+  Texture.cpp
+  UFO.cpp
+h:\unnc-public\graphic\project\cg project\cg project\ufo.cpp(9): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+h:\unnc-public\graphic\project\cg project\cg project\ufo.cpp(13): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+  正在生成代码...
   CG Project.vcxproj -> H:\UNNC-Public\Graphic\Project\CG Project\x64\Debug\CG Project.exe

@@ -11,9 +11,10 @@
 #include <windows.h>
 #include<Mmsystem.h>
 #pragma comment(lib,"winmm.lib")
-#define UFO_NUMBER 10
+#define UFO_NUMBER 40
 #define FRAME_TIME 66
 #define DELTA_TIME 0.033f
+#define SOLAR_SYSTEM_RANGE 2000
 using namespace cv;
 using namespace glm;
 class Vector3 : public glm::vec3

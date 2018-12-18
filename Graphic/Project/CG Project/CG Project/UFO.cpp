@@ -34,7 +34,7 @@ void UFO::move()
 
 	pos += toward * speed * DELTA_TIME;
 
-	if (pos.x > 1500 || pos.y > 1500 || pos.z > 1500 )
+	if (pos.x > SOLAR_SYSTEM_RANGE || pos.y > SOLAR_SYSTEM_RANGE || pos.z > SOLAR_SYSTEM_RANGE)
 	{
 		alive = false;
 	}

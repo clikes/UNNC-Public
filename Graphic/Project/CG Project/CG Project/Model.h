@@ -77,32 +77,6 @@ public:
 			}
 		}
 
-		/*glGenVertexArrays(1, &this->VAOId);
-		glGenBuffers(1, &this->VBOId);
-		
-		glBindVertexArray(this->VAOId);
-		glBindBuffer(GL_ARRAY_BUFFER, this->VBOId);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(GLshort)* faces.size(),
-			faces.data(), GL_STATIC_DRAW);*/
-		// 顶点位置属性
-		//glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE,
-		//	sizeof(GL_FLOAT) * 8, (GLvoid*)0);
-		//glVertexPointer(3, GL_FLOAT, sizeof(GL_FLOAT) * 5, vertices.data());
-		//glNormalPointer(GL_FLOAT, sizeof(GL_FLOAT) * 5, vertices.data());
-		//glVertexPointer(2, GL_FLOAT, sizeof(GL_FLOAT) * 6, vertices.data());
-		//glEnableVertexAttribArray(0);
-		//// 顶点法向量属性
-		//glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE,
-		//	sizeof(GL_FLOAT) * 8, (GLvoid*)(3 * sizeof(GL_FLOAT)));
-		//glEnableVertexAttribArray(1);
-		//// 顶点纹理坐标
-		//glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE,
-		//	sizeof(GL_FLOAT) * 8, (GLvoid*)(6 * sizeof(GL_FLOAT)));
-		//glEnableVertexAttribArray(2);
-
-		//glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-		//glBindVertexArray(0);
 
 	}
 
