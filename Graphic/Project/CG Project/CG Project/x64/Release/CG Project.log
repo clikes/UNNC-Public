@@ -1,5 +1,4 @@
-﻿  pch.cpp
-  Draw.cpp
+﻿  Draw.cpp
 h:\unnc-public\graphic\project\cg project\cg project\draw.cpp(16): warning C4244: “参数”: 从“int”转换到“GLfloat”，可能丢失数据
 h:\unnc-public\graphic\project\cg project\cg project\draw.cpp(35): warning C4244: “初始化”: 从“float”转换到“int”，可能丢失数据
 h:\unnc-public\graphic\project\cg project\cg project\draw.cpp(36): warning C4244: “初始化”: 从“float”转换到“int”，可能丢失数据
@@ -29,15 +28,6 @@ h:\unnc-public\graphic\project\cg project\cg project\draw.cpp(127): warning C424
 h:\unnc-public\graphic\project\cg project\cg project\draw.cpp(130): warning C4244: “参数”: 从“int”转换到“GLfloat”，可能丢失数据
 h:\unnc-public\graphic\project\cg project\cg project\draw.cpp(133): warning C4244: “参数”: 从“int”转换到“GLfloat”，可能丢失数据
   Lasor.cpp
-  main.cpp
-h:\unnc-public\graphic\project\cg project\cg project\model.h(27): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
-h:\unnc-public\graphic\project\cg project\cg project\model.h(28): warning C4477: “printf”: 格式字符串“%d”需要类型“int”的参数，但可变参数 1 拥有了类型“unsigned __int64”
-  h:\unnc-public\graphic\project\cg project\cg project\model.h(28): note: 请考虑在格式字符串中使用“%zd”
-h:\unnc-public\graphic\project\cg project\cg project\model.h(51): warning C4267: “+=”: 从“size_t”转换到“int”，可能丢失数据
-h:\unnc-public\graphic\project\cg project\cg project\main.cpp(82): warning C4244: “参数”: 从“int”转换到“float”，可能丢失数据
-h:\unnc-public\graphic\project\cg project\cg project\main.cpp(97): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
-h:\unnc-public\graphic\project\cg project\cg project\main.cpp(642): warning C4244: “参数”: 从“int”转换到“float”，可能丢失数据
-  Model.cpp
   ParticleController.cpp
 h:\unnc-public\graphic\project\cg project\cg project\particlecontroller.cpp(32): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
 h:\unnc-public\graphic\project\cg project\cg project\particlecontroller.cpp(33): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
@@ -95,14 +85,21 @@ h:\unnc-public\graphic\project\cg project\cg project\particlecontroller.cpp(82):
 h:\unnc-public\graphic\project\cg project\cg project\particlecontroller.cpp(66): warning C4101: “z”: 未引用的局部变量
 h:\unnc-public\graphic\project\cg project\cg project\particlecontroller.cpp(66): warning C4101: “y”: 未引用的局部变量
 h:\unnc-public\graphic\project\cg project\cg project\particlecontroller.cpp(66): warning C4101: “x”: 未引用的局部变量
-  Planet.cpp
   SpaceShip.cpp
-  Texture.cpp
   UFO.cpp
 h:\unnc-public\graphic\project\cg project\cg project\ufo.cpp(9): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
 h:\unnc-public\graphic\project\cg project\cg project\ufo.cpp(13): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
-  UI.cpp
+  main.cpp
+h:\unnc-public\graphic\project\cg project\cg project\model.h(27): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
+h:\unnc-public\graphic\project\cg project\cg project\model.h(28): warning C4477: “printf”: 格式字符串“%d”需要类型“int”的参数，但可变参数 1 拥有了类型“unsigned __int64”
+  h:\unnc-public\graphic\project\cg project\cg project\model.h(28): note: 请考虑在格式字符串中使用“%zd”
+h:\unnc-public\graphic\project\cg project\cg project\model.h(51): warning C4267: “+=”: 从“size_t”转换到“int”，可能丢失数据
+h:\unnc-public\graphic\project\cg project\cg project\main.cpp(82): warning C4244: “参数”: 从“int”转换到“float”，可能丢失数据
+h:\unnc-public\graphic\project\cg project\cg project\main.cpp(97): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
+h:\unnc-public\graphic\project\cg project\cg project\main.cpp(642): warning C4244: “参数”: 从“int”转换到“float”，可能丢失数据
   正在生成代码
-  All 2021 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  1 of 2021 functions (<0.1%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    1 functions had inline decision re-evaluated but remain unchanged
   已完成代码的生成
   CG Project.vcxproj -> H:\UNNC-Public\Graphic\Project\CG Project\x64\Release\CG Project.exe

@@ -75,6 +75,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>D:\Program Files\opencv\build\include\opencv2;D:\Program Files\opencv\build\include\opencv;D:\Program Files\opencv\build\include;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\Program Files\opencv\build\x64\vc14\lib;D:\Program Files\opencv\build\x86\vc14\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -99,7 +101,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
@@ -110,6 +112,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies);D:\Program Files\opencv\build\x64\vc14\lib\opencv_calib3d2413d.lib;D:\Program Files\opencv\build\x64\vc14\lib\opencv_contrib2413d.lib;D:\Program Files\opencv\build\x64\vc14\lib\opencv_core2413d.lib;D:\Program Files\opencv\build\x64\vc14\lib\opencv_features2d2413d.lib;D:\Program Files\opencv\build\x64\vc14\lib\opencv_flann2413d.lib;D:\Program Files\opencv\build\x64\vc14\lib\opencv_gpu2413d.lib;D:\Program Files\opencv\build\x64\vc14\lib\opencv_highgui2413d.lib;D:\Program Files\opencv\build\x64\vc14\lib\opencv_imgproc2413d.lib;D:\Program Files\opencv\build\x64\vc14\lib\opencv_legacy2413d.lib;D:\Program Files\opencv\build\x64\vc14\lib\opencv_ml2413d.lib;D:\Program Files\opencv\build\x64\vc14\lib\opencv_nonfree2413d.lib;D:\Program Files\opencv\build\x64\vc14\lib\opencv_objdetect2413d.lib;D:\Program Files\opencv\build\x64\vc14\lib\opencv_ocl2413d.lib;D:\Program Files\opencv\build\x64\vc14\lib\opencv_photo2413d.lib;D:\Program Files\opencv\build\x64\vc14\lib\opencv_stitching2413d.lib;D:\Program Files\opencv\build\x64\vc14\lib\opencv_superres2413d.lib;D:\Program Files\opencv\build\x64\vc14\lib\opencv_ts2413d.lib;D:\Program Files\opencv\build\x64\vc14\lib\opencv_video2413d.lib;D:\Program Files\opencv\build\x64\vc14\lib\opencv_videostab2413d.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -156,6 +159,7 @@
     <ClInclude Include="camera.h" />
     <ClInclude Include="math.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="Texture.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Ball.cpp" />
@@ -167,6 +171,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

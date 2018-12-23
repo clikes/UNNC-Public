@@ -1,11 +1,20 @@
 import numpy as np
-from sklearn.decomposition import PCA
-a = np.fromfile("wdbc.data",dtype=np.float)
-buffer = np.loadtxt("wdbc.data", dtype=np.str, delimiter=",")
+import sklearn.decomposition as sl
+import pandas as pd
+import matplotlib.pyplot as plt
+a = np.fromfile("H:/UNNC-Public/Machine Learning/CW/wdbc.data",dtype=np.float)
+buffer = np.loadtxt("H:/UNNC-Public/Machine Learning/CW/wdbc.data", dtype=np.str, delimiter=",")
 data = buffer[:, 2:].astype(np.float)
-row = buffer.shape[0]
-col = buffer.shape[1]
-testing = buffer[:169, :]
-training = buffer[169:, :]
+row = data.shape[0]
+col = data.shape[1]
+testing = data[:169, :]
+training = data[169:, :]
+PCA = sl.PCA(n_components=3)
+newdata = PCA.fit_transform(training)
 
-pca = PCA(n_components=3)
+# test = pd.read_csv(newdata)
+# df = pd.read_csv('H:/UNNC-Public/Machine Learning/CW/wdbc.data', header=0)
+df = pd.DataFrame(newdata)
+df.hist()
+plt.show()
+# print("123213")

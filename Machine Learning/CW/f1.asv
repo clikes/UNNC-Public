@@ -1,0 +1,9 @@
+function score = f1(labels, predictlabels)
+    [co]
+    corrects = double()
+    for i = 1:length(labels)
+        corrects(i) = labels(i) == predictlabels(i);
+    end
+    precision = labels == predictlabels;
+    recall = 
+end

@@ -1,0 +1,21 @@
+wdbc = csvread("H:/UNNC-Public/Machine Learning/CW/wdbc.data", 0,2);
+traindata = wdbc(1:400,1:end);
+testdata = wdbc(401:end,1:end);
+file = fopen("H:/UNNC-Public/Machine Learning/CW/wdbc.data");
+buffer = textscan(file, '%*d %s %*[^\n]', 'delimiter', ',');
+labels = buffer{1,1};
+
+[coeff,score,latent] = pca(wdbc);
+pca3 = score(1:end,1:3);
+pca5 = score(1:end,1:5);
+pca7 = score(1:end,1:7);
+pca9 = score(1:end,1:9);
+pca11 = score(1:end,1:11);
+pcas = {pca3 pca5 pca7 pca9 pca11};
+indices = crossvalind('Kfold',400,10);
+cvmodel = cell(1,5);
+for pi = 1:5
+    rng(1);
+    cvmodel{1,pi} =  fitctree(pcas{1,pi},labels,'CrossVal','on');
+end
+ % For reproducibility
