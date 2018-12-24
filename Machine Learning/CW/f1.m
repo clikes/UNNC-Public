@@ -1,12 +1,9 @@
-function score = f1(labels, predictlabels)
-    [row, ~] = size(labels);
-    corrects = 0;
-    for i = 1:row
-        if labels(i) == predictlabels(i)
-            corrects = corrects + 1;
-        end
-    end
-    
-    precision = corrects/row;
-    recall = 
+function [score, Precision, Recall] = f1(labels, predictlabels)
+    ConfusionMat = confusionmat(categorical(labels), categorical(predictlabels));
+    TP = ConfusionMat(1,1);
+    FP = ConfusionMat(2,1);
+    FN = ConfusionMat(1,2);
+    Precision = TP / (TP + FP);
+    Recall = TP / (TP + FN);
+    score = (2 * Precision * Recall ) / (Precision + Recall);
 end

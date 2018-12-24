@@ -1,11 +1,16 @@
+clear;
 wdbc = csvread("H:/UNNC-Public/Machine Learning/CW/wdbc.data", 0,2);
 traindata = wdbc(1:400,1:end);
 testdata = wdbc(401:end,1:end);
+testdata_zm = zeromeans(testdata);
 file = fopen("H:/UNNC-Public/Machine Learning/CW/wdbc.data");
 buffer = textscan(file, '%*d %s %*[^\n]', 'delimiter', ',');
 labels = buffer{1,1};
-
-[coeff,score,latent] = pca(wdbc);
+trainlabels = labels(1:400,1:end);
+testlabels = labels(401:end,1:end);
+%task2 decision tree
+[coeff,score,latent,tsquared,explained,mu] = pca(traindata);
+testdata_tr = transfrom(testdata,coeff,mu);
 pca3 = score(1:end,1:3);
 pca5 = score(1:end,1:5);
 pca7 = score(1:end,1:7);
@@ -13,9 +18,92 @@ pca9 = score(1:end,1:9);
 pca11 = score(1:end,1:11);
 pcas = {pca3 pca5 pca7 pca9 pca11};
 indices = crossvalind('Kfold',400,10);
-cvmodel = cell(1,5);
+cvloss = zeros(6,1);
+models = cell(1,6);
+predicelabels = cell(1,6);
+scores = zeros(6,1);
+rng(1);%fixed random seed
 for pi = 1:5
-    rng(1);
-    cvmodel{1,pi} =  fitctree(pcas{1,pi},labels,'CrossVal','on');
+    cvmodel = fitctree(pcas{1,pi},trainlabels, 'CrossVal', 'on');
+    cvloss(pi,1) = kfoldLoss(cvmodel);
+    models{1,pi} =  fitctree(pcas{1,pi},trainlabels);
+    testdata_tr_pca = testdata_tr(1:end, 1:pi*2+1);
+    predicelabels{1,pi} = predict(models{1,pi},testdata_tr_pca);
+    [sc, ~, ~] = f1(testlabels,predicelabels{1,pi});
+    scores(pi,1) = sc;
 end
- % For reproducibility
+pi = 6;
+rng(1);
+cvmodel = fitctree(traindata,trainlabels, 'CrossVal', 'on');
+cvloss(pi,1) = kfoldLoss(cvmodel);
+models{1,pi} =  fitctree(traindata,trainlabels);
+testdata_tr_pca = testdata_tr(1:end, 1:end);
+predicelabels{1,pi} = predict(models{1,pi},testdata_tr_pca);
+[sc, ~, ~] = f1(testlabels,predicelabels{1,pi});
+scores(pi,1) = sc;
+%bar(scores)
+%task3 svm 
+svmerrors = zeros(3,1);
+svmscores = zeros(3,1);
+svmprecisions = zeros(3,1);
+svmrecalls = zeros(3,1);
+cvsvmloss = zeros(3,1);
+kernelfunc = {'RBF' 'polynomial' 'linear'};
+%adjust hyperparameters rbf and draw ROC curve
+maxkernelscale = 1000;
+TPRs = [];
+FPRs = [];
+best = 2;%best is closet to (0,1)
+bestkernelscale = 0;
+for i = 1:0.3:maxkernelscale
+    svmmodel = fitcsvm(pca5,trainlabels,'KernelFunction',kernelfunc{1,1},...
+    'standardize', true,...       
+    'KernelScale', i);
+    predictlabels = predict(svmmodel,testdata_tr(1:end, 1:5));
+    [tpr, fpr] = getTPRFPR(testlabels, predictlabels);
+    TPRs(end+1) = tpr;
+    FPRs(end+1) = fpr;
+    if best > ((1-tpr)^2 + (0-fpr)^2)%get the best kernel scale
+       best = (1-tpr)^2 + (0-fpr)^2;
+       bestkernelscale = i;
+    end
+end
+figure;
+plot(FPRs,TPRs);
+title('ROC curve RBF kernel');
+xlabel('FPR');
+ylabel('TPR');
+
+svmmodel = fitcsvm(pca5,trainlabels,'KernelFunction',kernelfunc{1,1},...
+'standardize', true,...       
+'KernelScale', 1);
+predictlabels = predict(svmmodel,testdata_tr(1:end, 1:5));
+cvsvmloss(1,1) = kfoldLoss(crossval(svmmodel));
+[sc, Precision, Recall] = f1(testlabels,predictlabels);
+svmerrors(1,1) = classificationerror(testlabels,predictlabels);
+svmscores(1,1) = sc;
+svmprecisions(1,1) = Precision;
+svmrecalls(1,1) = Recall;
+
+%use default value to train model
+for i = 1:3 
+    svmmodel = fitcsvm(pca5,trainlabels,'KernelFunction',kernelfunc{1,i});
+    predictlabels = predict(svmmodel,testdata_tr(1:end, 1:5));
+    cvsvmloss(i,1) = kfoldLoss(crossval(svmmodel));
+    [sc, Precision, Recall] = f1(testlabels,predictlabels);
+    svmerrors(i,1) = classificationerror(testlabels,predictlabels);
+    svmscores(i,1) = sc;
+    svmprecisions(i,1) = Precision;
+    svmrecalls(i,1) = Recall;
+end
+bar(cvsvmloss);
+bar(svmprecisions);
+bar(svmrecalls);
+%bar(svmerrors)
+bar(svmscores);
+set(gca,'xticklabel',kernelfunc)
+%try to adjust hyperparemeter myself
+
+
+
+
