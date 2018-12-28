@@ -1,9 +1,10 @@
 clear;
-wdbc = csvread("H:/UNNC-Public/Machine Learning/CW/wdbc.data", 0,2);
+rng(1);%fixed random seed
+wdbc = csvread("wdbc.data", 0,2);
 traindata = wdbc(1:400,1:end);
 testdata = wdbc(401:end,1:end);
 testdata_zm = zeromeans(testdata);
-file = fopen("H:/UNNC-Public/Machine Learning/CW/wdbc.data");
+file = fopen("wdbc.data");
 buffer = textscan(file, '%*d %s %*[^\n]', 'delimiter', ',');
 labels = buffer{1,1};
 trainlabels = labels(1:400,1:end);
@@ -16,31 +17,80 @@ pca5 = score(1:end,1:5);
 pca7 = score(1:end,1:7);
 pca9 = score(1:end,1:9);
 pca11 = score(1:end,1:11);
-pcas = {pca3 pca5 pca7 pca9 pca11};
+pcas = {pca3 pca5 pca7 pca9 pca11, traindata};
 indices = crossvalind('Kfold',400,10);
 cvloss = zeros(6,1);
 models = cell(1,6);
 predicelabels = cell(1,6);
 scores = zeros(6,1);
-rng(1);%fixed random seed
+ofscores = zeros(6,1);
+
+treetimes = 0;
+treetraintime = 0;
+bestleafsize = zeros(6,1);
+bestf1s = zeros(6,1);
+%cross validation
+test = [];
+for pi = 3:6
+    bestf1 = 0;
+    for i = 1:1:50
+        cvf1s = zeros(10,1);
+        for cv = 1:10
+            cvtest = pcas{1,pi};
+            cvtrain = pcas{1,pi};
+            cvtestlabels = trainlabels;
+            cvtrainlabels = trainlabels;
+
+            cvmodel =  fitctree(cvtrain,cvtrainlabels, 'MinLeafSize', i);
+            cvpredict = predict(cvmodel,cvtest);
+            [sc, ~, ~] = f1(cvtestlabels,cvpredict);
+            cvf1s(cv,1) = sc;
+        end
+        test(end+1) = pi;
+        test(end+1) = bestf1;
+        if bestf1 < mean(cvf1s)
+            bestf1 = mean(cvf1s);
+            bestleafsize(pi,1) = i;E
+            bestf1s(pi,1) = bestf1;
+        end
+    end
+end
+bar(bestf1s);
+
+
 for pi = 1:5
-    cvmodel = fitctree(pcas{1,pi},trainlabels, 'CrossVal', 'on');
-    cvloss(pi,1) = kfoldLoss(cvmodel);
+    time = now;
     models{1,pi} =  fitctree(pcas{1,pi},trainlabels);
+    treetraintime = treetraintime + (now - time);
     testdata_tr_pca = testdata_tr(1:end, 1:pi*2+1);
+    time = now;
     predicelabels{1,pi} = predict(models{1,pi},testdata_tr_pca);
+    treetimes = treetimes + (now - time);
     [sc, ~, ~] = f1(testlabels,predicelabels{1,pi});
     scores(pi,1) = sc;
+    %overfitting test
+    ofpredictlabel = predict(models{1,pi},pcas{1,pi});
+    [sc, ~, ~] = f1(trainlabels,ofpredictlabel);
+    ofscores(pi,1) = sc;
 end
 pi = 6;
 rng(1);
 cvmodel = fitctree(traindata,trainlabels, 'CrossVal', 'on');
 cvloss(pi,1) = kfoldLoss(cvmodel);
+time = now;
 models{1,pi} =  fitctree(traindata,trainlabels);
+treetraintime = treetraintime + (now - time);
 testdata_tr_pca = testdata_tr(1:end, 1:end);
+time = now;
 predicelabels{1,pi} = predict(models{1,pi},testdata_tr_pca);
+treetimes = treetimes + (now - time);
 [sc, ~, ~] = f1(testlabels,predicelabels{1,pi});
 scores(pi,1) = sc;
+%overfitting test
+ofpredictlabel = predict(models{1,pi},traindata);
+[sc, ~, ~] = f1(trainlabels,ofpredictlabel);
+ofscores(6,1) = sc;
+
 %bar(scores)
 %task3 svm 
 svmerrors = zeros(3,1);
@@ -49,17 +99,17 @@ svmprecisions = zeros(3,1);
 svmrecalls = zeros(3,1);
 cvsvmloss = zeros(3,1);
 kernelfunc = {'RBF' 'polynomial' 'linear'};
-%adjust hyperparameters rbf and draw ROC curve
-maxkernelscale = 1000;
+% adjust hyperparameters rbf and draw ROC curve
+maxkernelscale = 2;
 TPRs = [];
 FPRs = [];
 best = 2;%best is closet to (0,1)
 bestkernelscale = 0;
-for i = 1:0.1:maxkernelscale
-    svmmodel = fitcsvm(pca5,trainlabels,'KernelFunction',kernelfunc{1,1},...
+for i = 1:0.0001:maxkernelscale
+    svmmodel = fitcsvm(pca3,trainlabels,'KernelFunction',kernelfunc{1,1},...
     'standardize', true,...       
     'KernelScale', i);
-    predictlabels = predict(svmmodel,testdata_tr(1:end, 1:5));
+    predictlabels = predict(svmmodel,testdata_tr(1:end, 1:3));
     [tpr, fpr] = getTPRFPR(testlabels, predictlabels);
     TPRs(end+1) = tpr;
     FPRs(end+1) = fpr;
@@ -74,21 +124,12 @@ title('ROC curve RBF kernel');
 xlabel('FPR');
 ylabel('TPR');
 
-svmmodel = fitcsvm(pca5,trainlabels,'KernelFunction',kernelfunc{1,1},...
-'standardize', true,...       
-'KernelScale', bestkernelscale);
-predictlabels = predict(svmmodel,testdata_tr(1:end, 1:5));
-cvsvmloss(1,1) = kfoldLoss(crossval(svmmodel));
-[sc, Precision, Recall] = f1(testlabels,predictlabels);
-svmerrors(1,1) = classificationerror(testlabels,predictlabels);
-svmscores(1,1) = sc;
-svmprecisions(1,1) = Precision;
-svmrecalls(1,1) = Recall;
+
 
 %use default value to train model
 for i = 1:3 
-    svmmodel = fitcsvm(pca5,trainlabels,'KernelFunction',kernelfunc{1,i});
-    predictlabels = predict(svmmodel,testdata_tr(1:end, 1:5));
+    svmmodel = fitcsvm(pca3,trainlabels,'KernelFunction',kernelfunc{1,i});
+    predictlabels = predict(svmmodel,testdata_tr(1:end, 1:3));
     cvsvmloss(i,1) = kfoldLoss(crossval(svmmodel));
     [sc, Precision, Recall] = f1(testlabels,predictlabels);
     svmerrors(i,1) = classificationerror(testlabels,predictlabels);
@@ -97,17 +138,57 @@ for i = 1:3
     svmrecalls(i,1) = Recall;
 end
 
-maxkernelscale = 100;
+
+%auto optimize hyperparameter
 for i = 1:3 
+    svmmodel = fitcsvm(pca3,trainlabels,'KernelFunction',kernelfunc{1,i},...
+        "OptimizeHyperparameter", 'auto');
+    predictlabels = predict(svmmodel,testdata_tr(1:end, 1:3));
+    cvsvmloss(i,1) = kfoldLoss(crossval(svmmodel));
+    [sc, Precision, Recall] = f1(testlabels,predictlabels);
+    svmerrors(i,1) = classificationerror(testlabels,predictlabels);
+    svmscores(i,1) = sc;
+    svmprecisions(i,1) = Precision;
+    svmrecalls(i,1) = Recall;
+end
+
+svmtime = 0;
+svmtraintime = 0;
+ofsvmscores = zeros(3,1);
+%train RBF kernel with bestkernelscale
+time = now;
+svmmodel = fitcsvm(pca3,trainlabels,'KernelFunction',kernelfunc{1,1},...
+'standardize', true,...       
+'KernelScale', bestkernelscale);
+svmtraintime = svmtraintime + (now - time);
+
+time = now;
+predictlabels = predict(svmmodel,testdata_tr(1:end, 1:3));
+svmtime = svmtime + (now - time);
+
+cvsvmloss(1,1) = kfoldLoss(crossval(svmmodel));
+[sc, Precision, Recall] = f1(testlabels,predictlabels);
+svmerrors(1,1) = classificationerror(testlabels,predictlabels);
+svmscores(1,1) = sc;
+svmprecisions(1,1) = Precision;
+svmrecalls(1,1) = Recall;
+%overfitting test
+predictlabels = predict(svmmodel,pca3);
+[sc, ~, ~] = f1(trainlabels,predictlabels);
+ofsvmscores(1,1) = sc;
+
+
+maxkernelscale = 100;
+for i = 2:3 
     TPRs = [];
     FPRs = [];
     best = 2;%best is closet to (0,1)
     bestkernelscale = 0;
     for j = 1:0.1:maxkernelscale
-        svmmodel = fitcsvm(pca5,trainlabels,'KernelFunction',kernelfunc{1,i},...
+        svmmodel = fitcsvm(pca3,trainlabels,'KernelFunction',kernelfunc{1,i},...
         'standardize', true,...       
         'KernelScale', j);
-        predictlabels = predict(svmmodel,testdata_tr(1:end, 1:5));
+        predictlabels = predict(svmmodel,testdata_tr(1:end, 1:3));
         [tpr, fpr] = getTPRFPR(testlabels, predictlabels);
         TPRs(end+1) = tpr;
         FPRs(end+1) = fpr;
@@ -121,26 +202,37 @@ for i = 1:3
     title(['ROC curve ' kernelfunc{1,i} ' kernel']);
     xlabel('FPR');
     ylabel('TPR');
-    svmmodel = fitcsvm(pca5,trainlabels,'KernelFunction',kernelfunc{1,i},...
+    time = now;
+    svmmodel = fitcsvm(pca3,trainlabels,'KernelFunction',kernelfunc{1,i},...
         'standardize', true,...       
         'KernelScale', bestkernelscale);
-    predictlabels = predict(svmmodel,testdata_tr(1:end, 1:5));
+    svmtraintime = svmtraintime + (now - time);
+    time = now;
+    predictlabels = predict(svmmodel,testdata_tr(1:end, 1:3));
+    svmtime = svmtime + (now - time);%calculate svm predict time
     cvsvmloss(i,1) = kfoldLoss(crossval(svmmodel));
     [sc, Precision, Recall] = f1(testlabels,predictlabels);
     svmerrors(i,1) = classificationerror(testlabels,predictlabels);
     svmscores(i,1) = sc;
     svmprecisions(i,1) = Precision;
     svmrecalls(i,1) = Recall;
+    %overfitting test
+    predictlabels = predict(svmmodel,pca3);
+    [sc, ~, ~] = f1(trainlabels,predictlabels);
+    ofsvmscores(i,1) = sc;
 end
 bar(cvsvmloss);
 bar(svmprecisions);
 bar(svmrecalls);
-%bar(svmerrors)
+bar(svmerrors)
 bar(svmscores);
 set(gca,'xticklabel',kernelfunc)
-title('f1')
+set(gca,'xticklabel',[3,5,7,9,11,30]);
+title('decision tree cross validation')
 %try to adjust hyperparemeter myself
-
-
-
-
+treetimes = treetimes/6;
+svmtime = svmtime / 3;
+treetraintime = treetraintime /6;
+svmtraintime = svmtraintime /3; 
+oflvltree = mean(ofscores-scores);
+oflvlsvm = mean(ofsvmscores - svmscores);
